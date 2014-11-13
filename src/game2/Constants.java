@@ -14,8 +14,10 @@ public interface Constants {
     int CELLSHIGH = 15;
     int minMovements = 0;
     int numberOfTests = 0;
+    boolean inLobbyHuh = true;
+    boolean inGameOneHuh = false;
+    boolean inGameTwoHuh = false;
     boolean thisIsTheEnd = false;
-    // booleans for which game to play
     Random rand = new Random();
     Posn upperleft = new Posn(200, 120);
     Posn base = new Posn(WIDTH / 2, HEIGHT / 2);

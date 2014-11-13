@@ -7,7 +7,7 @@ import javalib.worldimages.*;
 public class Lobby extends World implements Constants {
 
     public static WorldImage lobby = new RectangleImage(base, WIDTH, HEIGHT, Color.gray);
-    
+
     public WorldImage buildWorld() {
         WorldImage newscene = lobby;
         return new OverlayImages(newscene, showScore());
@@ -27,15 +27,12 @@ public class Lobby extends World implements Constants {
         return buildWorld();
     }
 
-    public World onTick() {
-        buildWorld();
-        return new Game2(lobby);
-    }
-
-    public World onKeyEvent(String key) {
-        return new Game2(lobby);
-    }
-
-    
-
+//    public World onTick() {
+//        buildWorld();
+//        return new Game2(lobby);
+//    }
+//
+//    public World onKeyEvent(String key) {
+//        return new Game2(lobby);
+//    }
 }

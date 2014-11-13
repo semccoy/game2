@@ -39,25 +39,9 @@ public class Game2 extends World implements Constants {
         return new Game2(universe);
     }
 
-    public WorldEnd worldEnds() {
-        String winText;
-        if (thisIsTheEnd) {
-            if (movements <= minMovements) {
-                winText = "Great job! That only took you " + movements + " moves!";
-            } else if (movements <= (minMovements + 10)) {
-                winText = "Not bad! That was " + movements + " moves.";
-            } else {
-                winText = "What are you doing?? What took you " + movements + " moves?";
-            }
-            return new WorldEnd(true, new OverlayImages(this.makeImage(),
-                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2), winText, 40, Color.white)));
-        } else {
-            return new WorldEnd(false, this.makeImage());
-        }
-    }
 
     public static void main(String[] args) throws Exception {
-        Lobby game = new Lobby(Lobby.lobby);
+        WorldBuilder game = new WorldBuilder(new Player(new Posn(200,200), 40, 40, Color.red), new Lobby(Lobby.lobby));
         game.bigBang(WIDTH, HEIGHT, .1);
     }
 }

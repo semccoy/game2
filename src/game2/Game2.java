@@ -11,9 +11,7 @@ public class Game2 extends World implements Constants {
     public static WorldImage universe = new RectangleImage(base, WIDTH, HEIGHT, Color.black);
 
     public WorldImage buildWorld() {
-        WorldImage newscene = universe;
-
-        return new OverlayImages(newscene, showScore());
+        return new OverlayImages(universe, showScore());
     }
 
     public WorldImage showScore() {
@@ -41,7 +39,7 @@ public class Game2 extends World implements Constants {
 
 
     public static void main(String[] args) throws Exception {
-        WorldBuilder game = new WorldBuilder(new Player(new Posn(200,200), 40, 40, Color.red), new Lobby(Lobby.lobby));
+        WorldBuilder game = new WorldBuilder(new Player(playerStart, 40, 40, Color.red), new Lobby(Lobby.lobby));
         game.bigBang(WIDTH, HEIGHT, .1);
     }
 }

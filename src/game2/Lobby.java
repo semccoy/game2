@@ -6,11 +6,25 @@ import javalib.worldimages.*;
 
 public class Lobby extends World implements Constants {
 
-    public static WorldImage lobby = new RectangleImage(base, WIDTH, HEIGHT, Color.gray);
+    
+    Portal portal1 = new Portal(new Posn(410, Utilities.randomInt(240, HEIGHT - 160)), 40, Utilities.randomColor());
+    Portal portal2 = new Portal(new Posn(1030, Utilities.randomInt(240, HEIGHT - 160)), 40, Utilities.randomColor());
+    public static WorldImage lobby = new RectangleImage(base, WIDTH - 200, HEIGHT - 200, Color.gray);
+
+    public Lobby(WorldImage lob) {
+        super();
+        this.lobby = lob;
+    }
 
     public WorldImage buildWorld() {
-        WorldImage newscene = lobby;
-        return new OverlayImages(newscene, showScore());
+        return new OverlayImages(universe,
+                new OverlayImages(lobby,
+                        new OverlayImages(portal1.placePortal(),
+                                new OverlayImages(portal2.placePortal(), showScore()))));
+    }
+
+    public WorldImage makeImage() {
+        return buildWorld();
     }
 
     public WorldImage showScore() {
@@ -18,21 +32,4 @@ public class Lobby extends World implements Constants {
                 new TextImage(new Posn(WIDTH / 2, 65), "wow such score", 20, Color.white));
     }
 
-    public Lobby(WorldImage lob) {
-        super();
-        this.lobby = lob;
-    }
-
-    public WorldImage makeImage() {
-        return buildWorld();
-    }
-
-//    public World onTick() {
-//        buildWorld();
-//        return new Game2(lobby);
-//    }
-//
-//    public World onKeyEvent(String key) {
-//        return new Game2(lobby);
-//    }
 }

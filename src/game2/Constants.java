@@ -19,6 +19,7 @@ public interface Constants {
     boolean inGameTwoHuh = false;
     boolean thisIsTheEnd = false;
     Random rand = new Random();
+    Posn playerStart = new Posn(720,400);
     Posn upperleft = new Posn(200, 120);
     Posn base = new Posn(WIDTH / 2, HEIGHT / 2);
     public WorldImage universe = new RectangleImage(base, WIDTH, HEIGHT, Color.black);

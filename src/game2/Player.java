@@ -5,7 +5,7 @@ import javalib.worldimages.*;
 
 public class Player implements Constants {
 
-    int movements = 0;
+    static int movements = 0;
 
     Posn center;
     int length;
@@ -45,7 +45,14 @@ public class Player implements Constants {
         }
     }
 
-    // Checks if Player is out of bounds.
+
+    public Posn getCoords() {
+        return new Posn(this.center.x, this.center.y);
+    }
+    
+    // frame image to bound world
+    
+    
     boolean outOfBounds(int width, int height) {
         return this.center.x < 0
                 || this.center.x > width

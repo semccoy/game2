@@ -37,7 +37,6 @@ public class Game2 extends World implements Constants {
         return new Game2(universe);
     }
 
-
     public static void main(String[] args) throws Exception {
         WorldBuilder game = new WorldBuilder(new Player(playerStart, 40, 40, Color.red), new Lobby(Lobby.lobby));
         game.bigBang(WIDTH, HEIGHT, .1);

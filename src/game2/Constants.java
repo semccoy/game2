@@ -1,12 +1,13 @@
 package game2;
 
-import javalib.impworld.*;
+import javalib.funworld.*;
 import javalib.worldimages.*;
 import java.awt.*;
 import java.util.*;
 
 public interface Constants {
-    int step = 20;
+
+    int step = 40;
     int WIDTH = 1440;
     int HEIGHT = 800;
     int CELLSIZE = 40;
@@ -19,14 +20,8 @@ public interface Constants {
     boolean inGameTwoHuh = false;
     boolean thisIsTheEnd = false;
     Random rand = new Random();
-    Posn playerStart = new Posn(720,400);
+    Posn playerStart = new Posn(720, 400);
     Posn upperleft = new Posn(200, 120);
     Posn base = new Posn(WIDTH / 2, HEIGHT / 2);
     public WorldImage universe = new RectangleImage(base, WIDTH, HEIGHT, Color.black);
-    public WorldImage background = new RectangleImage(base, 1080, 600, Color.lightGray);
-    public RectangleImage start = new RectangleImage(new Posn(240, 160), CELLSIZE, CELLSIZE, Color.green);
-    public ArrayList<RectangleImage> worldArray = new ArrayList<RectangleImage>();
-    public ArrayList<RectangleImage> pathArray = new ArrayList<RectangleImage>();
-    public ArrayList<RectangleImage> tempPaths = new ArrayList<RectangleImage>();
-
 }

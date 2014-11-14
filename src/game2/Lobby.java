@@ -5,10 +5,12 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 
 public class Lobby extends World implements Constants {
-
     
-    Portal portal1 = new Portal(new Posn(410, Utilities.randomInt(240, HEIGHT - 160)), 40, Utilities.randomColor());
-    Portal portal2 = new Portal(new Posn(1030, Utilities.randomInt(240, HEIGHT - 160)), 40, Utilities.randomColor());
+    TextImage beratement;
+
+    Posn p1 = new Posn(410, Utilities.randomInt(240, HEIGHT - 160));
+    Posn p2 = new Posn(1030, Utilities.randomInt(240, HEIGHT - 160));
+
     public static WorldImage lobby = new RectangleImage(base, WIDTH - 200, HEIGHT - 200, Color.gray);
 
     public Lobby(WorldImage lob) {
@@ -17,6 +19,9 @@ public class Lobby extends World implements Constants {
     }
 
     public WorldImage buildWorld() {
+        Portal portal1 = new Portal(p1, 40, Utilities.randomColor());
+        Portal portal2 = new Portal(p2, 40, Utilities.randomColor());
+
         return new OverlayImages(universe,
                 new OverlayImages(lobby,
                         new OverlayImages(portal1.placePortal(),
@@ -28,8 +33,8 @@ public class Lobby extends World implements Constants {
     }
 
     public WorldImage showScore() {
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "your score here", 20, Color.white),
-                new TextImage(new Posn(WIDTH / 2, 65), "wow such score", 20, Color.white));
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "wow such score", 20, Color.white),
+                new TextImage(new Posn(WIDTH / 2, 65),"" + Player.movements, 20, Color.white));
     }
 
 }

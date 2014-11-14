@@ -23,41 +23,60 @@ public class Player implements Constants {
         return new RectangleImage(this.center, this.length, this.width, this.color);
     }
 
-    // make this while (inbounds), else you lose points, get recentered, and it yells at you
     public Player movePlayer(String key) {
         if ((key.equals("up") || key.equals("w"))) {
+            if (atTopBorder(this)) {
+                movements += 10;
+                return new Player(playerStart, this.length, this.width, this.color);
+            }
             movements++;
             return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.color);
         } else if ((key.equals("down") || key.equals("s"))) {
+            if (atBottomBorder(this)) {
+                movements += 10;
+                return new Player(playerStart, this.length, this.width, this.color);
+            }
             movements++;
             return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.color);
         } else if ((key.equals("left") || key.equals("a"))) {
+            if (atLeftBorder(this)) {
+                movements += 10;
+                return new Player(playerStart, this.length, this.width, this.color);
+            }
             movements++;
             return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.color);
         } else if ((key.equals("right") || key.equals("d"))) {
+            if (atRightBorder(this)) {
+                movements += 10;
+                return new Player(playerStart, this.length, this.width, this.color);
+            }
             movements++;
             return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.color);
-        } else if (key.equals("x")) {
-            movements = movements + 5;
-            return new Player(new Posn(500, 250), this.length, this.width, this.color);
+        } else if (key.equals("x") && !this.center.equals(playerStart)) {
+            movements += 5;
+            return new Player(playerStart, this.length, this.width, this.color);
         } else {
             return new Player(this.center, this.length, this.width, this.color);
         }
+
     }
 
-
-    public Posn getCoords() {
-        return new Posn(this.center.x, this.center.y);
-    }
-    
     // frame image to bound world
-    
-    
-    boolean outOfBounds(int width, int height) {
-        return this.center.x < 0
-                || this.center.x > width
-                || this.center.y < 0
-                || this.center.y > height;
+    boolean atTopBorder(Player player) {
+        return player.center.y < 140;
     }
+
+    boolean atBottomBorder(Player player) {
+        return player.center.y > 660;
+    }
+
+    boolean atLeftBorder(Player player) {
+        return player.center.x < 140;
+    }
+
+    boolean atRightBorder(Player player) {
+        return player.center.x > 1300;
+    }
+
 
 }

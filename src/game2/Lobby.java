@@ -5,23 +5,19 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 
 public class Lobby extends World implements Constants {
-    
-    TextImage beratement;
 
-    Posn p1 = new Posn(410, Utilities.randomInt(240, HEIGHT - 160));
-    Posn p2 = new Posn(1030, Utilities.randomInt(240, HEIGHT - 160));
 
     public static WorldImage lobby = new RectangleImage(base, WIDTH - 200, HEIGHT - 200, Color.gray);
 
+    // add onTick to get new portal colors so they're no longer boring
+    
+    
     public Lobby(WorldImage lob) {
         super();
         this.lobby = lob;
     }
 
     public WorldImage buildWorld() {
-        Portal portal1 = new Portal(p1, 40, Utilities.randomColor());
-        Portal portal2 = new Portal(p2, 40, Utilities.randomColor());
-
         return new OverlayImages(universe,
                 new OverlayImages(lobby,
                         new OverlayImages(portal1.placePortal(),
@@ -33,8 +29,8 @@ public class Lobby extends World implements Constants {
     }
 
     public WorldImage showScore() {
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "wow such score", 20, Color.white),
-                new TextImage(new Posn(WIDTH / 2, 65),"" + Player.movements, 20, Color.white));
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "score", 20, Color.white),
+                new TextImage(new Posn(WIDTH / 2, 65), "" + Player.movements, 20, Color.white));
     }
 
 }

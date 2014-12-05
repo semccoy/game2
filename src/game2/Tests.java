@@ -1,5 +1,5 @@
 package game2;
 
-public class Tests {
+public class Tests implements Constants{
 
 }

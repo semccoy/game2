@@ -13,6 +13,12 @@ public interface Constants {
     int CELLSIZE = 40;
     int CELLSWIDE = 27;
     int CELLSHIGH = 15;
+    int portalSize = 40;
+    int portalRadius = 40;
+    Posn p1 = new Posn(410, Utilities.randomInt(240, HEIGHT - 160));
+    Posn p2 = new Posn(1030, Utilities.randomInt(240, HEIGHT - 160));
+    Portal portal1 = new Portal(p1, portalSize, Utilities.randomColor());
+    Portal portal2 = new Portal(p2, portalSize, Utilities.randomColor());
     int minMovements = 0;
     int numberOfTests = 0;
     boolean inLobbyHuh = true;

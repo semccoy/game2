@@ -12,7 +12,7 @@ public class Player implements Constants {
     int width;
     Color color;
 
-    Player(Posn center, int length, int width, Color color) {
+    public Player(Posn center, int length, int width, Color color) {
         this.center = center;
         this.length = length;
         this.width = width;
@@ -24,28 +24,34 @@ public class Player implements Constants {
     }
 
     public Player movePlayer(String key) {
-        if ((key.equals("up") || key.equals("w"))) {
+        if (insidePortal(portal1)) {
+            System.out.println("1");
+        }
+        if (insidePortal(portal2)) {
+            System.out.println("2");
+        }
+        if ((key.equals("up"))) {
             if (atTopBorder(this)) {
                 movements += 10;
                 return new Player(playerStart, this.length, this.width, this.color);
             }
             movements++;
             return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.color);
-        } else if ((key.equals("down") || key.equals("s"))) {
+        } else if ((key.equals("down"))) {
             if (atBottomBorder(this)) {
                 movements += 10;
                 return new Player(playerStart, this.length, this.width, this.color);
             }
             movements++;
             return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.color);
-        } else if ((key.equals("left") || key.equals("a"))) {
+        } else if ((key.equals("left"))) {
             if (atLeftBorder(this)) {
                 movements += 10;
                 return new Player(playerStart, this.length, this.width, this.color);
             }
             movements++;
             return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.color);
-        } else if ((key.equals("right") || key.equals("d"))) {
+        } else if ((key.equals("right"))) {
             if (atRightBorder(this)) {
                 movements += 10;
                 return new Player(playerStart, this.length, this.width, this.color);
@@ -61,7 +67,6 @@ public class Player implements Constants {
 
     }
 
-    // frame image to bound world
     boolean atTopBorder(Player player) {
         return player.center.y < 140;
     }
@@ -78,5 +83,15 @@ public class Player implements Constants {
         return player.center.x > 1300;
     }
 
+    public boolean insidePortal(Portal portal) {
+        if (this.center.x <= portal.center.x + step
+                && this.center.x >= portal.center.x - step
+                && this.center.y <= portal.center.y + step
+                && this.center.y >= portal.center.y - step) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

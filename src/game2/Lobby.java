@@ -5,27 +5,28 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 
 public class Lobby extends World implements Constants {
+// move screen with player? (return screen +/- char location on a bigger world screen) 
 
+    Player player;
+    World world;
 
-    public static WorldImage lobby = new RectangleImage(base, WIDTH - 200, HEIGHT - 200, Color.gray);
-
-    // add onTick to get new portal colors so they're no longer boring
-    
-    
-    public Lobby(WorldImage lob) {
+    public Lobby(World world, Player player) {
         super();
-        this.lobby = lob;
+        this.player = player;
+        this.world = world;
     }
 
     public WorldImage buildWorld() {
         return new OverlayImages(universe,
                 new OverlayImages(lobby,
-                        new OverlayImages(portal1.placePortal(),
-                                new OverlayImages(portal2.placePortal(), showScore()))));
+                        new OverlayImages(bill1.placeBill(),
+                                new OverlayImages(bill2.placeBill(), showScore()))));
     }
 
     public WorldImage makeImage() {
-        return buildWorld();
+        return new OverlayImages(this.world.makeImage(),
+                new OverlayImages(lobby,
+                        new OverlayImages(this.player.playerImage(), showScore())));
     }
 
     public WorldImage showScore() {
@@ -33,4 +34,11 @@ public class Lobby extends World implements Constants {
                 new TextImage(new Posn(WIDTH / 2, 65), "" + Player.movements, 20, Color.white));
     }
 
+    public World onKeyEvent(String key) {
+        return new Lobby(this.world, this.player.movePlayer(key));
+    }
+
+    public World onTick() {
+        return new Lobby(this.world, this.player);
+    }
 }

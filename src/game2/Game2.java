@@ -6,8 +6,6 @@ import java.awt.*;
 
 public class Game2 extends World implements Constants {
 
-    static Color playerColor = Color.red;
-    
     public static WorldImage universe = new RectangleImage(base, WIDTH, HEIGHT, Color.black);
 
     public Game2(WorldImage uni) {
@@ -24,7 +22,7 @@ public class Game2 extends World implements Constants {
     }
 
     public static void main(String[] args) throws Exception {
-        WorldBuilder game = new WorldBuilder(new Player(playerStart, 40, 40, playerColor), new Lobby(Lobby.lobby));
+        Lobby game = new Lobby(new Game2(universe), new Player(playerStart, 40, 40, playerColor));
         game.bigBang(WIDTH, HEIGHT, .1);
     }
 

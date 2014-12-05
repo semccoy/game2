@@ -24,12 +24,13 @@ public class Player implements Constants {
     }
 
     public Player movePlayer(String key) {
-        if (insidePortal(portal1)) {
-            System.out.println("1");
-        }
-        if (insidePortal(portal2)) {
-            System.out.println("2");
-        }
+        // collision stuff
+//        if (insideBill(Bill1)) {
+//            System.out.println("1");
+//        }
+//        if (insideBill(Bill2)) {
+//            System.out.println("2");
+//        }
         if ((key.equals("up"))) {
             if (atTopBorder(this)) {
                 movements += 10;
@@ -83,15 +84,16 @@ public class Player implements Constants {
         return player.center.x > 1300;
     }
 
-    public boolean insidePortal(Portal portal) {
-        if (this.center.x <= portal.center.x + step
-                && this.center.x >= portal.center.x - step
-                && this.center.y <= portal.center.y + step
-                && this.center.y >= portal.center.y - step) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // collision stuff, might be useful later on...
+//    public boolean insideBill(Bill bill) {
+//        if (this.center.x <= bill.center.x + step
+//                && this.center.x >= bill.center.x - step
+//                && this.center.y <= bill.center.y + step
+//                && this.center.y >= bill.center.y - step) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
 }

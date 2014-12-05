@@ -25,42 +25,42 @@ public class Player implements Constants {
 
     public Player movePlayer(String key) {
         // collision stuff
-//        if (insideBill(Bill1)) {
+//        if (insideBill(bill1)) {
 //            System.out.println("1");
 //        }
-//        if (insideBill(Bill2)) {
+//        if (insideBill(bill2)) {
 //            System.out.println("2");
 //        }
         if ((key.equals("up"))) {
             if (atTopBorder(this)) {
-                movements += 10;
+                score.increaseBy(10);
                 return new Player(playerStart, this.length, this.width, this.color);
             }
-            movements++;
+            score.increaseBy(1);
             return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.color);
         } else if ((key.equals("down"))) {
             if (atBottomBorder(this)) {
-                movements += 10;
+                score.increaseBy(10);
                 return new Player(playerStart, this.length, this.width, this.color);
             }
-            movements++;
+            score.increaseBy(1);
             return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.color);
         } else if ((key.equals("left"))) {
             if (atLeftBorder(this)) {
-                movements += 10;
+                score.increaseBy(10);
                 return new Player(playerStart, this.length, this.width, this.color);
             }
-            movements++;
+            score.increaseBy(1);
             return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.color);
         } else if ((key.equals("right"))) {
             if (atRightBorder(this)) {
-                movements += 10;
+                score.increaseBy(10);
                 return new Player(playerStart, this.length, this.width, this.color);
             }
-            movements++;
+            score.increaseBy(1);
             return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.color);
         } else if (key.equals("x") && !this.center.equals(playerStart)) {
-            movements += 5;
+            score.increaseBy(5);
             return new Player(playerStart, this.length, this.width, this.color);
         } else {
             return new Player(this.center, this.length, this.width, this.color);
@@ -95,5 +95,4 @@ public class Player implements Constants {
 //            return false;
 //        }
 //    }
-
 }

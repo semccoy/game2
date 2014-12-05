@@ -17,10 +17,11 @@ public class Lobby extends World implements Constants {
     }
 
     public WorldImage buildWorld() {
-        return new OverlayImages(universe,
-                new OverlayImages(lobby,
-                        new OverlayImages(bill1.placeBill(),
-                                new OverlayImages(bill2.placeBill(), showScore()))));
+        return new OverlayImages(universe, lobby);
+//        return new OverlayImages(universe,
+//                new OverlayImages(lobby,
+//                        new OverlayImages(bill1.placeBill(),
+//                                new OverlayImages(bill2.placeBill(), showScore()))));
     }
 
     public WorldImage makeImage() {
@@ -31,7 +32,7 @@ public class Lobby extends World implements Constants {
 
     public WorldImage showScore() {
         return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "score", 20, Color.white),
-                new TextImage(new Posn(WIDTH / 2, 65), "" + Player.movements, 20, Color.white));
+                new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, Color.white));
     }
 
     public World onKeyEvent(String key) {

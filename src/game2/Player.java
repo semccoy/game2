@@ -30,11 +30,21 @@ public class Player implements Constants {
 //        if (insideBill(bill2)) {
 //            System.out.println("2");
 //        }
+
+        // trail.addToTrail(this.center);
+        Posn newPos = this.center;
+        if (this.trail.size() < maxTrailSize) {
+            this.trail.add(newPos);
+        } else {
+            for (int i = 0; i < maxTrailSize - 1; i++) {
+                this.trail.set(i, this.trail.get(i + 1));
+            }
+            this.trail.set(maxTrailSize - 1, newPos);
+        }
+        System.out.println("trail size: " + this.trail.size());
+    
         
-        
-        trail.addToTrail(this.center);
-        
-        
+
         switch (key) {
             case "up":
                 if (atTopBorder(this)) {

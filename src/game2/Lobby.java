@@ -27,10 +27,18 @@ public class Lobby extends World implements Constants {
 
     }
 
+    
+    WorldImage newTrail = new RectangleImage(new Posn(0,0), 40, 40, Color.black);
     public WorldImage makeImage() {
+        for (int i = 0; i < trail.size(); i++) {
+            RectangleImage temp = new RectangleImage(trail.get(i), 40, 40, Color.green);
+            newTrail = new OverlayImages(newTrail, temp);
+        }
+        
         return new OverlayImages(this.world.makeImage(),
+                new OverlayImages(showScore(),
                 new OverlayImages(lobby,
-                        new OverlayImages(this.player.playerImage(), showScore())));
+                        new OverlayImages(newTrail, this.player.playerImage()))));
     }
 
     public WorldImage showScore() {

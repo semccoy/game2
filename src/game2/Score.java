@@ -1,6 +1,6 @@
 package game2;
 
-public class Score {
+public class Score implements Constants{
 
     Integer score;
 

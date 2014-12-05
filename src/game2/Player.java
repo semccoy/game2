@@ -1,11 +1,10 @@
 package game2;
 
 import java.awt.*;
+import java.util.ArrayList;
 import javalib.worldimages.*;
 
 public class Player implements Constants {
-
-    static int movements = 0;
 
     Posn center;
     int length;
@@ -31,39 +30,45 @@ public class Player implements Constants {
 //        if (insideBill(bill2)) {
 //            System.out.println("2");
 //        }
-        if ((key.equals("up"))) {
-            if (atTopBorder(this)) {
-                score.increaseBy(10);
+        
+        
+        trail.addToTrail(this.center);
+        
+        
+        switch (key) {
+            case "up":
+                if (atTopBorder(this)) {
+                    score.increaseBy(10);
+                    return new Player(playerStart, this.length, this.width, this.color);
+                }
+                score.increaseBy(1);
+                return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.color);
+            case "down":
+                if (atBottomBorder(this)) {
+                    score.increaseBy(10);
+                    return new Player(playerStart, this.length, this.width, this.color);
+                }
+                score.increaseBy(1);
+                return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.color);
+            case "left":
+                if (atLeftBorder(this)) {
+                    score.increaseBy(10);
+                    return new Player(playerStart, this.length, this.width, this.color);
+                }
+                score.increaseBy(1);
+                return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.color);
+            case "right":
+                if (atRightBorder(this)) {
+                    score.increaseBy(10);
+                    return new Player(playerStart, this.length, this.width, this.color);
+                }
+                score.increaseBy(1);
+                return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.color);
+            case "x":
+                score.increaseBy(5);
                 return new Player(playerStart, this.length, this.width, this.color);
-            }
-            score.increaseBy(1);
-            return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.color);
-        } else if ((key.equals("down"))) {
-            if (atBottomBorder(this)) {
-                score.increaseBy(10);
-                return new Player(playerStart, this.length, this.width, this.color);
-            }
-            score.increaseBy(1);
-            return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.color);
-        } else if ((key.equals("left"))) {
-            if (atLeftBorder(this)) {
-                score.increaseBy(10);
-                return new Player(playerStart, this.length, this.width, this.color);
-            }
-            score.increaseBy(1);
-            return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.color);
-        } else if ((key.equals("right"))) {
-            if (atRightBorder(this)) {
-                score.increaseBy(10);
-                return new Player(playerStart, this.length, this.width, this.color);
-            }
-            score.increaseBy(1);
-            return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.color);
-        } else if (key.equals("x") && !this.center.equals(playerStart)) {
-            score.increaseBy(5);
-            return new Player(playerStart, this.length, this.width, this.color);
-        } else {
-            return new Player(this.center, this.length, this.width, this.color);
+            default:
+                return new Player(this.center, this.length, this.width, this.color);
         }
 
     }

@@ -18,10 +18,13 @@ public class Lobby extends World implements Constants {
 
     public WorldImage buildWorld() {
         return new OverlayImages(universe, lobby);
+        
+        // collision stuff
 //        return new OverlayImages(universe,
 //                new OverlayImages(lobby,
 //                        new OverlayImages(bill1.placeBill(),
 //                                new OverlayImages(bill2.placeBill(), showScore()))));
+
     }
 
     public WorldImage makeImage() {

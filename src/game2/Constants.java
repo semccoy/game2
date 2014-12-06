@@ -1,6 +1,5 @@
 package game2;
 
-import javalib.funworld.*;
 import javalib.worldimages.*;
 import java.awt.*;
 import java.util.*;

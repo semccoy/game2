@@ -23,9 +23,10 @@ public class Lobby extends World implements Constants {
     }
 
     public WorldImage makeTrail() {
+        int tailSize;
         for (int i = 0; i < trail.size(); i++) {
-            int tailSize = 10 + i * maxTrailSize;
-            RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize, Color.green);
+            tailSize = 5 + i * 30 / maxTrailSize;
+            RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize, new Color(255, 200 - i * 100 / maxTrailSize, 200 - i * 100 / maxTrailSize));
             newTrail = new OverlayImages(newTrail, temp);
         }
         return newTrail;

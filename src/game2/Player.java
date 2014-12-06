@@ -1,8 +1,6 @@
 package game2;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import javalib.worldimages.*;
 
 public class Player implements Constants {
@@ -34,7 +32,6 @@ public class Player implements Constants {
             this.trail.set(maxTrailSize - 1, newPos);
         }
         System.out.println("trail size: " + this.trail.size());
-
     }
 
     public Player movePlayer(String key) {

@@ -2,6 +2,7 @@ package game2;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import javalib.worldimages.*;
 
 public class Player implements Constants {
@@ -22,16 +23,7 @@ public class Player implements Constants {
         return new RectangleImage(this.center, this.length, this.width, this.color);
     }
 
-    public Player movePlayer(String key) {
-        // collision stuff
-//        if (insideBill(bill1)) {
-//            System.out.println("1");
-//        }
-//        if (insideBill(bill2)) {
-//            System.out.println("2");
-//        }
-
-        // trail.addToTrail(this.center);
+    public void populatePlayerTrail() {
         Posn newPos = this.center;
         if (this.trail.size() < maxTrailSize) {
             this.trail.add(newPos);
@@ -42,8 +34,19 @@ public class Player implements Constants {
             this.trail.set(maxTrailSize - 1, newPos);
         }
         System.out.println("trail size: " + this.trail.size());
-    
-        
+
+    }
+
+    public Player movePlayer(String key) {
+        // collision stuff
+//        if (insideBill(bill1)) {
+//            System.out.println("1");
+//        }
+//        if (insideBill(bill2)) {
+//            System.out.println("2");
+//        }
+
+        populatePlayerTrail();
 
         switch (key) {
             case "up":

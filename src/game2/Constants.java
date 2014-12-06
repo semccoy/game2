@@ -7,7 +7,7 @@ import java.util.*;
 
 public interface Constants {
 
-    int maxTrailSize = 10;
+    int maxTrailSize = 5;
     ArrayList<Posn> trail = new ArrayList<Posn>();
     // Trail trail = new Trail(new ArrayList<Posn>(maxTrailSize));
     Score score = new Score(0);

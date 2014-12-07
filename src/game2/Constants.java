@@ -31,7 +31,7 @@ public interface Constants {
     boolean inGameTwoHuh = false;
     boolean thisIsTheEnd = false;
     Random rand = new Random();
-    Posn playerStart = new Posn(720, 400);
+    Posn playerStart = new Posn(400, 400);
     Posn upperleft = new Posn(200, 120);
     Color playerColor = Color.red;
     WorldImage lobby = new RectangleImage(base, WIDTH - 200, HEIGHT - 200, Color.gray);

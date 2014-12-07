@@ -9,6 +9,7 @@ public class Lobby extends World implements Constants {
 
     Player player;
     World world;
+    Bill bill1, bill2, bill3;
 
     // this is just a square off the playing screen that we build our trail on top of
     // - i get issues when i don't use this (for example, since the trail doesn't
@@ -16,10 +17,13 @@ public class Lobby extends World implements Constants {
     // - if there's a better way to build this arraylist of images please let me know!
     WorldImage newTrail = new RectangleImage(new Posn(-100, -100), 40, 40, Color.black);
 
-    public Lobby(World world, Player player) {
+    public Lobby(World world, Player player, Bill bill1, Bill bill2, Bill bill3) {
         super();
         this.player = player;
         this.world = world;
+        this.bill1 = bill1;
+        this.bill2 = bill2;
+        this.bill3 = bill3;
     }
 
     public WorldImage makeTrail() {
@@ -46,7 +50,11 @@ public class Lobby extends World implements Constants {
         return new OverlayImages(this.world.makeImage(),
                 new OverlayImages(showScore(),
                         new OverlayImages(lobby,
-                                new OverlayImages(makeTrail(), this.player.playerImage()))));
+                                new OverlayImages(makeTrail(),
+                                        new OverlayImages(bill1.billImage(),
+                                                new OverlayImages(bill2.billImage(),
+                                                        new OverlayImages(bill3.billImage(),
+                                                                this.player.playerImage())))))));
     }
 
     public WorldImage showScore() {
@@ -55,11 +63,24 @@ public class Lobby extends World implements Constants {
     }
 
     public World onKeyEvent(String key) {
-        return new Lobby(this.world, this.player.movePlayer(key));
+        return new Lobby(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3);
     }
 
     public World onTick() {
-        return new Lobby(this.world, this.player);
-    }
+        if (bill1.hitPlayer(player) || bill2.hitPlayer(player) || bill3.hitPlayer(player)) {
+            score.increaseBy(-50);
+        }
+        if (!bill1.inBounds()) {
+            bill1 = new Bill(new Posn(1320, 120), 20, 0, 0, Color.yellow);
+        }
+        if (!bill2.inBounds()) {
+            bill2 = new Bill(new Posn(1320, 680), 20, 0, 0, Color.yellow);
+        }
+        if (!bill3.inBounds()) {
+            bill3 = new Bill(new Posn(1320, 400), 20, 0, 0, Color.yellow);
+        }
 
+        return new Lobby(this.world, this.player, this.bill1.moveBillTowards(player),
+                this.bill2.moveBillTowards(player), this.bill3.moveBillTowards(player));
+    }
 }

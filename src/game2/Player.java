@@ -47,56 +47,58 @@ public class Player implements Constants {
 
         switch (key) {
             case "up":
-                if (atTopBorder(this)) {
+                if (atTopBorder()) {
                     score.increaseBy(10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.color);
             case "down":
-                if (atBottomBorder(this)) {
+                if (atBottomBorder()) {
                     score.increaseBy(10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.color);
             case "left":
-                if (atLeftBorder(this)) {
+                if (atLeftBorder()) {
                     score.increaseBy(10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.color);
             case "right":
-                if (atRightBorder(this)) {
+                if (atRightBorder()) {
                     score.increaseBy(10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.color);
             case "x":
-                score.increaseBy(5);
-                return new Player(playerStart, this.length, this.width, this.color);
+                if (this.center != playerStart) {
+                    score.increaseBy(5);
+                    return new Player(playerStart, this.length, this.width, this.color);
+                }
             default:
                 return new Player(this.center, this.length, this.width, this.color);
         }
 
     }
 
-    boolean atTopBorder(Player player) {
-        return player.center.y < 140;
+    boolean atTopBorder() {
+        return this.center.y < 140;
     }
 
-    boolean atBottomBorder(Player player) {
-        return player.center.y > 660;
+    boolean atBottomBorder() {
+        return this.center.y > 660;
     }
 
-    boolean atLeftBorder(Player player) {
-        return player.center.x < 140;
+    boolean atLeftBorder() {
+        return this.center.x < 140;
     }
 
-    boolean atRightBorder(Player player) {
-        return player.center.x > 1300;
+    boolean atRightBorder() {
+        return this.center.x > 1300;
     }
 
     // collision stuff, might be useful later on...

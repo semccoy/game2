@@ -3,7 +3,7 @@ package game2;
 import java.awt.*;
 import javalib.worldimages.*;
 
-public class Player implements Constants {
+public class Player implements Constants, BoundedObject {
 
     Posn center;
     int length;
@@ -76,19 +76,19 @@ public class Player implements Constants {
         }
     }
 
-    boolean atTopBorder() {
+    public boolean atTopBorder() {
         return this.center.y < 140;
     }
 
-    boolean atBottomBorder() {
+    public boolean atBottomBorder() {
         return this.center.y > 660;
     }
 
-    boolean atLeftBorder() {
+    public boolean atLeftBorder() {
         return this.center.x < 140;
     }
 
-    boolean atRightBorder() {
+    public boolean atRightBorder() {
         return this.center.x > 1300;
     }
 

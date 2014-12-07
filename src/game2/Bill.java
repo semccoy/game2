@@ -3,7 +3,7 @@ package game2;
 import java.awt.*;
 import javalib.worldimages.*;
 
-public class Bill implements Constants {
+public class Bill implements Constants, BoundedObject {
 
     Posn center;
     int radius;
@@ -27,36 +27,42 @@ public class Bill implements Constants {
         return this.billImage();
     }
 
+    int slowDownBy = 2;
+    int wiggliness = 4;
+
     public Bill moveBillTowards(Player player) {
-//        int mx = this.center.x - player.center.x;
         int my = this.center.y - player.center.y;
-        return new Bill(new Posn(this.center.x - step, this.center.y + my / step), this.radius, this.dx, this.dy, this.color);
+        return new Bill(new Posn(this.center.x - step / slowDownBy, this.center.y - wiggliness * my / step),
+                this.radius, this.dx, this.dy, this.color);
     }
 
     // interface this stuff with player ("thing in playing field" interface)
     boolean inBounds() {
-        return !(this.center.y < 100) && !(this.center.y > 700)
-                && !(this.center.x < 140) && !(this.center.x > 1340);
+        return !(atTopBorder()) && !(atBottomBorder())
+                && !(atLeftBorder()) && !(atRightBorder());
     }
 
-    boolean atTopBorder() {
+    public boolean atTopBorder() {
         return this.center.y < 100;
     }
 
-    boolean atBottomBorder() {
+    public boolean atBottomBorder() {
         return this.center.y > 700;
     }
 
-    boolean atLeftBorder() {
+    public boolean atLeftBorder() {
         return this.center.x < 140;
     }
 
-    boolean atRightBorder() {
-        return this.center.x > 1340;
+    public boolean atRightBorder() {
+        return this.center.x > 1300;
     }
 
     boolean hitPlayer(Player player) {
-        return this.center == player.center;
+        return this.center.x >= player.center.x - billRadius/2
+                && this.center.x <= player.center.x + billRadius/2
+                && this.center.y >= player.center.y - billRadius/2
+                && this.center.y <= player.center.y + billRadius/2;
     }
 
 }

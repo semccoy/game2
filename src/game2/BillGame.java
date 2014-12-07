@@ -4,7 +4,7 @@ import java.awt.Color;
 import javalib.funworld.*;
 import javalib.worldimages.*;
 
-public class Lobby extends World implements Constants {
+public class BillGame extends World implements Constants {
 
     Player player;
     World world;
@@ -16,7 +16,7 @@ public class Lobby extends World implements Constants {
     // - if there's a better way to build this arraylist of images please let me know!
     WorldImage newTrail = new RectangleImage(new Posn(-100, -100), 40, 40, Color.black);
 
-    public Lobby(World world, Player player, Bill bill1, Bill bill2, Bill bill3) {
+    public BillGame(World world, Player player, Bill bill1, Bill bill2, Bill bill3) {
         super();
         this.player = player;
         this.world = world;
@@ -57,7 +57,7 @@ public class Lobby extends World implements Constants {
     }
 
     public World onKeyEvent(String key) {
-        return new Lobby(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3);
+        return new BillGame(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3);
     }
 
     public World onTick() {
@@ -65,16 +65,16 @@ public class Lobby extends World implements Constants {
             score.increaseBy(-50);
         }
         if (!bill1.inBounds()) {
-            bill1 = new Bill(new Posn(1280, 120), billRadius, 0, 0, Color.yellow);
+            bill1 = new Bill(bill1Start, billRadius, 0, 0, Color.yellow);
         }
         if (!bill2.inBounds()) {
-            bill2 = new Bill(new Posn(1280, 400), billRadius, 0, 0, Color.yellow);
+            bill2 = new Bill(bill2Start, billRadius, 0, 0, Color.yellow);
         }
         if (!bill3.inBounds()) {
-            bill3 = new Bill(new Posn(1280, 680), billRadius, 0, 0, Color.yellow);
+            bill3 = new Bill(bill3Start, billRadius, 0, 0, Color.yellow);
         }
 
-        return new Lobby(this.world, this.player, this.bill1.moveBillTowards(player),
+        return new BillGame(this.world, this.player, this.bill1.moveBillTowards(player),
                 this.bill2.moveBillTowards(player), this.bill3.moveBillTowards(player));
     }
 }

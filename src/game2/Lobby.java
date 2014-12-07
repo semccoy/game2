@@ -5,7 +5,6 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 
 public class Lobby extends World implements Constants {
-// move screen with player? (return screen +/- char location on a bigger world screen) 
 
     Player player;
     World world;
@@ -30,26 +29,21 @@ public class Lobby extends World implements Constants {
         int tailSize;
         for (int i = 0; i < trail.size(); i++) {
             tailSize = 5 + i * 30 / maxTrailSize;
-            RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize, new Color(255, 200 - i * 100 / maxTrailSize, 200 - i * 100 / maxTrailSize));
+            RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize,
+                    new Color(255, 200 - i * 100 / maxTrailSize, 200 - i * 100 / maxTrailSize));
             newTrail = new OverlayImages(newTrail, temp);
         }
         return newTrail;
     }
 
     public WorldImage buildWorld() {
-        return new OverlayImages(universe, lobby);
-
-        // collision stuff
-//        return new OverlayImages(universe,
-//                new OverlayImages(lobby,
-//                        new OverlayImages(bill1.placeBill(),
-//                                new OverlayImages(bill2.placeBill(), showScore()))));
+        return new OverlayImages(universe, background);
     }
 
     public WorldImage makeImage() {
         return new OverlayImages(this.world.makeImage(),
                 new OverlayImages(showScore(),
-                        new OverlayImages(lobby,
+                        new OverlayImages(background,
                                 new OverlayImages(makeTrail(),
                                         new OverlayImages(bill1.billImage(),
                                                 new OverlayImages(bill2.billImage(),
@@ -71,13 +65,13 @@ public class Lobby extends World implements Constants {
             score.increaseBy(-50);
         }
         if (!bill1.inBounds()) {
-            bill1 = new Bill(new Posn(1320, 120), 20, 0, 0, Color.yellow);
+            bill1 = new Bill(new Posn(1280, 120), billRadius, 0, 0, Color.yellow);
         }
         if (!bill2.inBounds()) {
-            bill2 = new Bill(new Posn(1320, 680), 20, 0, 0, Color.yellow);
+            bill2 = new Bill(new Posn(1280, 400), billRadius, 0, 0, Color.yellow);
         }
         if (!bill3.inBounds()) {
-            bill3 = new Bill(new Posn(1320, 400), 20, 0, 0, Color.yellow);
+            bill3 = new Bill(new Posn(1280, 680), billRadius, 0, 0, Color.yellow);
         }
 
         return new Lobby(this.world, this.player, this.bill1.moveBillTowards(player),

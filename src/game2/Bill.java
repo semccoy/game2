@@ -30,21 +30,21 @@ public class Bill implements Constants {
     public Bill moveBillTowards(Player player) {
 //        int mx = this.center.x - player.center.x;
         int my = this.center.y - player.center.y;
-        return new Bill(new Posn(this.center.x + step, this.center.y + my / step), this.radius, this.dx, this.dy, this.color);
+        return new Bill(new Posn(this.center.x - step, this.center.y + my / step), this.radius, this.dx, this.dy, this.color);
     }
 
     // interface this stuff with player ("thing in playing field" interface)
     boolean inBounds() {
-        return !(this.center.y < 140) && !(this.center.y > 660)
-                && !(this.center.x < 140) && !(this.center.x > 1300);
+        return !(this.center.y < 100) && !(this.center.y > 700)
+                && !(this.center.x < 140) && !(this.center.x > 1340);
     }
 
     boolean atTopBorder() {
-        return this.center.y < 140;
+        return this.center.y < 100;
     }
 
     boolean atBottomBorder() {
-        return this.center.y > 660;
+        return this.center.y > 700;
     }
 
     boolean atLeftBorder() {
@@ -52,7 +52,7 @@ public class Bill implements Constants {
     }
 
     boolean atRightBorder() {
-        return this.center.x > 1300;
+        return this.center.x > 1340;
     }
 
     boolean hitPlayer(Player player) {

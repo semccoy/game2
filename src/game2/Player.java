@@ -35,14 +35,6 @@ public class Player implements Constants {
     }
 
     public Player movePlayer(String key) {
-        // collision stuff
-//        if (insideBill(bill1)) {
-//            System.out.println("1");
-//        }
-//        if (insideBill(bill2)) {
-//            System.out.println("2");
-//        }
-
         populatePlayerTrail();
 
         switch (key) {
@@ -82,7 +74,6 @@ public class Player implements Constants {
             default:
                 return new Player(this.center, this.length, this.width, this.color);
         }
-
     }
 
     boolean atTopBorder() {
@@ -101,15 +92,4 @@ public class Player implements Constants {
         return this.center.x > 1300;
     }
 
-    // collision stuff, might be useful later on...
-//    public boolean insideBill(Bill bill) {
-//        if (this.center.x <= bill.center.x + step
-//                && this.center.x >= bill.center.x - step
-//                && this.center.y <= bill.center.y + step
-//                && this.center.y >= bill.center.y - step) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }

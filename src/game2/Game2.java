@@ -24,9 +24,9 @@ public class Game2 extends World implements Constants {
     public static void main(String[] args) throws Exception {
         Lobby game = new Lobby(new Game2(universe),
                 new Player(playerStart, 40, 40, playerColor),
-                new Bill(new Posn(1320, 120), 20, 0, 0, Color.yellow),
-                new Bill(new Posn(1320, 120), 20, 0, 0, Color.yellow),
-                new Bill(new Posn(1320, 120), 20, 0, 0, Color.yellow));
+                new Bill(bill1Start, 20, 0, 0, Color.yellow),
+                new Bill(bill2Start, 20, 0, 0, Color.yellow),
+                new Bill(bill3Start, 20, 0, 0, Color.yellow));
         
         game.bigBang(WIDTH, HEIGHT, .1);
     }

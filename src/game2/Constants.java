@@ -15,6 +15,7 @@ public interface Constants {
     ArrayList<Posn> trail = new ArrayList<Posn>();
 
     int billRadius = 20;
+    int billStartX = 1320;
     Posn bill1Start = new Posn(1320, 120);
     Posn bill2Start = new Posn(1320, 400);
     Posn bill3Start = new Posn(1320, 680);

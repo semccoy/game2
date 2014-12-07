@@ -1,5 +1,6 @@
 package game2;
 
+import static game2.Utilities.*;
 import java.awt.*;
 import javalib.worldimages.*;
 
@@ -10,12 +11,14 @@ public class Bill implements Constants, BoundedObject {
     Color color;
     int dx;
     int dy;
+    int speed;
 
-    Bill(Posn center, int radius, int dx, int dy, Color color) {
+    Bill(Posn center, int radius, int dx, int dy, int speed, Color color) {
         this.center = center;
         this.radius = radius;
         this.dx = dx;
         this.dy = dy;
+        this.speed = speed;
         this.color = color;
     }
 
@@ -28,18 +31,18 @@ public class Bill implements Constants, BoundedObject {
     }
 
     int slowDownBy = 2;
-    int wiggliness = 4;
+    int wiggliness = 2;
 
     public Bill moveBillTowards(Player player) {
         int my = this.center.y - player.center.y;
-        return new Bill(new Posn(this.center.x - step / slowDownBy, this.center.y - wiggliness * my / step),
-                this.radius, this.dx, this.dy, this.color);
+
+        return new Bill(new Posn(this.center.x - speed * 5, this.center.y - randomInt(wiggliness-1,wiggliness+1) * my / step),
+                this.radius, this.dx, this.dy, this.speed, this.color);
     }
 
-    // interface this stuff with player ("thing in playing field" interface)
     boolean inBounds() {
         return !(atTopBorder()) && !(atBottomBorder())
-                && !(atLeftBorder()) && !(atRightBorder());
+                && !(atLeftBorder());
     }
 
     public boolean atTopBorder() {
@@ -54,15 +57,12 @@ public class Bill implements Constants, BoundedObject {
         return this.center.x < 140;
     }
 
-    public boolean atRightBorder() {
-        return this.center.x > 1300;
-    }
-
+    // bills don't have atRightBorder because they start there
     boolean hitPlayer(Player player) {
-        return this.center.x >= player.center.x - billRadius/2
-                && this.center.x <= player.center.x + billRadius/2
-                && this.center.y >= player.center.y - billRadius/2
-                && this.center.y <= player.center.y + billRadius/2;
+        return this.center.x >= player.center.x - billRadius
+                && this.center.x <= player.center.x + billRadius
+                && this.center.y >= player.center.y - billRadius
+                && this.center.y <= player.center.y + billRadius;
     }
 
 }

@@ -1,5 +1,6 @@
 package game2;
 
+import static game2.Utilities.*;
 import java.awt.Color;
 import javalib.funworld.*;
 import javalib.worldimages.*;
@@ -60,18 +61,31 @@ public class BillGame extends World implements Constants {
         return new BillGame(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3);
     }
 
+    int speedInc = 4;
+
     public World onTick() {
+        // if you want to make it harder, increase speed as you get better
+//        if (score.score <= 100) {
+//            speedInc = 4;
+//        } else if (score.score > 100) {
+//            speedInc = 6;
+//        } else if (score.score > 200) {
+//            speedInc = 8;
+//        }
+        // if score > some value, maybe 300, show an option to go to the other game
+        // maybe have to hit "g" or something to go to game2
+
         if (bill1.hitPlayer(player) || bill2.hitPlayer(player) || bill3.hitPlayer(player)) {
-            score.increaseBy(-50);
+            score.increaseBy(-3);
         }
         if (!bill1.inBounds()) {
-            bill1 = new Bill(bill1Start, billRadius, 0, 0, Color.yellow);
+            bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedInc), Color.yellow);
         }
         if (!bill2.inBounds()) {
-            bill2 = new Bill(bill2Start, billRadius, 0, 0, Color.yellow);
+            bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedInc), Color.yellow);
         }
         if (!bill3.inBounds()) {
-            bill3 = new Bill(bill3Start, billRadius, 0, 0, Color.yellow);
+            bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedInc), Color.yellow);
         }
 
         return new BillGame(this.world, this.player, this.bill1.moveBillTowards(player),

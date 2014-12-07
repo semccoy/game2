@@ -31,7 +31,6 @@ public class Player implements Constants, BoundedObject {
             }
             this.trail.set(maxTrailSize - 1, newPos);
         }
-        System.out.println("trail size: " + this.trail.size());
     }
 
     public Player movePlayer(String key) {
@@ -40,35 +39,35 @@ public class Player implements Constants, BoundedObject {
         switch (key) {
             case "up":
                 if (atTopBorder()) {
-                    score.increaseBy(10);
+                    score.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.color);
             case "down":
                 if (atBottomBorder()) {
-                    score.increaseBy(10);
+                    score.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.color);
             case "left":
                 if (atLeftBorder()) {
-                    score.increaseBy(10);
+                    score.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.color);
             case "right":
                 if (atRightBorder()) {
-                    score.increaseBy(10);
+                    score.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.color);
             case "x":
                 if (this.center != playerStart) {
-                    score.increaseBy(5);
+                    score.increaseBy(-5);
                     return new Player(playerStart, this.length, this.width, this.color);
                 }
             default:

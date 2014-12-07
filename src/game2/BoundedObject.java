@@ -7,6 +7,4 @@ public interface BoundedObject {
     boolean atBottomBorder();
 
     boolean atLeftBorder();
-
-    boolean atRightBorder();
 }

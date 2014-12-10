@@ -44,12 +44,13 @@ public class BillGame extends World implements Constants {
     public WorldImage makeImage() {
         return new OverlayImages(this.world.makeImage(),
                 new OverlayImages(showScore(),
-                        new OverlayImages(background,
-                                new OverlayImages(makeTrail(),
-                                        new OverlayImages(bill1.billImage(),
-                                                new OverlayImages(bill2.billImage(),
-                                                        new OverlayImages(bill3.billImage(),
-                                                                this.player.playerImage())))))));
+                        new OverlayImages(showStats(),
+                                new OverlayImages(background,
+                                        new OverlayImages(makeTrail(),
+                                                new OverlayImages(bill1.billImage(),
+                                                        new OverlayImages(bill2.billImage(),
+                                                                new OverlayImages(bill3.billImage(),
+                                                                        this.player.playerImage()))))))));
     }
 
     public WorldImage showScore() {
@@ -57,35 +58,50 @@ public class BillGame extends World implements Constants {
                 new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, Color.white));
     }
 
+    public WorldImage showStats() {
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 5, 25), "bills spawned: ", 15, Color.white),
+                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 100, 25), billSpawns.print(), 15, Color.white),
+                        new OverlayImages(new TextImage(new Posn(WIDTH / 5, 45), "times whacked: ", 15, Color.white),
+                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 100, 45), whacks.print(), 15, Color.white),
+                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 15, 65), "worlds fallen off of: ", 15, Color.white),
+                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 100, 65), falls.print(), 15, Color.white),
+                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 1, 85), "resets resetted: ", 15, Color.white),
+                                                                new TextImage(new Posn(WIDTH / 5 + 100, 85), resets.print(), 15, Color.white))))))));
+    }
+
     public World onKeyEvent(String key) {
         return new BillGame(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3);
     }
 
-    int speedInc = 4;
-
     public World onTick() {
         // if you want to make it harder, increase speed as you get better
-//        if (score.score <= 100) {
-//            speedInc = 4;
+//        if (score.score <= 50) {
+//            speedo = 4;
+//        } else if (score.score > 50) {
+//            speedo = 6;
 //        } else if (score.score > 100) {
-//            speedInc = 6;
-//        } else if (score.score > 200) {
-//            speedInc = 8;
+//            speedo = 8;
 //        }
-        // if score > some value, maybe 300, show an option to go to the other game
+        // if score > some value, maybe 150, show an option to go to the other game
         // maybe have to hit "g" or something to go to game2
-
+        // if score is too low you lose because you're bad at this
+        // if whacks is too high " "
+        
         if (bill1.hitPlayer(player) || bill2.hitPlayer(player) || bill3.hitPlayer(player)) {
+            whacks.increaseBy(1);
             score.increaseBy(-3);
         }
         if (!bill1.inBounds()) {
-            bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedInc), Color.yellow);
+            billSpawns.increaseBy(1);
+            bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedo), Color.yellow);
         }
         if (!bill2.inBounds()) {
-            bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedInc), Color.yellow);
+            billSpawns.increaseBy(1);
+            bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedo), Color.yellow);
         }
         if (!bill3.inBounds()) {
-            bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedInc), Color.yellow);
+            billSpawns.increaseBy(1);
+            bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), billRadius, 0, 0, randomInt(1, speedo), Color.yellow);
         }
 
         return new BillGame(this.world, this.player, this.bill1.moveBillTowards(player),

@@ -2,9 +2,9 @@ package game2;
 
 public interface BoundedObject {
 
-    boolean atTopBorder();
+    boolean hitTopBorder();
 
-    boolean atBottomBorder();
+    boolean hitBottomBorder();
 
-    boolean atLeftBorder();
+    boolean hitLeftBorder();
 }

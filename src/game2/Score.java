@@ -1,6 +1,6 @@
 package game2;
 
-public class Score implements Constants{
+public class Score implements Constants {
 
     Integer score;
 
@@ -8,6 +8,7 @@ public class Score implements Constants{
         score = 0;
     }
 
+    // mostly for testing things at non-zero scores
     public Score(int score) {
         this.score = score;
     }

@@ -8,10 +8,10 @@ public class Bill implements Constants, BoundedObject {
 
     Posn center;
     int radius;
-    Color color;
     int dx;
     int dy;
     int speed;
+    Color color;
 
     Bill(Posn center, int radius, int dx, int dy, int speed, Color color) {
         this.center = center;
@@ -30,13 +30,13 @@ public class Bill implements Constants, BoundedObject {
         return this.billImage();
     }
 
-    int wiggliness = 2;
-
     public Bill moveBillTowards(Player player) {
+        int mx = this.center.x - player.center.x;
         int my = this.center.y - player.center.y;
-
         return new Bill(new Posn(this.center.x - speed * 5, this.center.y - randomInt(wiggliness - 1, wiggliness + 1) * my / step),
                 this.radius, this.dx, this.dy, this.speed, this.color);
+//        return new Bill(new Posn(this.center.x - randomInt(wiggliness - 1, wiggliness + 1) * mx / step,  this.center.y- speed * 5),
+//                this.radius, this.dx, this.dy, this.speed, this.color); // and return bills from bottom of screen?
     }
 
     boolean inBounds() {
@@ -56,12 +56,17 @@ public class Bill implements Constants, BoundedObject {
         return this.center.x < 140;
     }
 
-    // bills don't have hitRightBorder because they start there
     boolean hitPlayer(Player player) {
-        return this.center.x >= player.center.x - billRadius
-                && this.center.x <= player.center.x + billRadius
-                && this.center.y >= player.center.y - billRadius
-                && this.center.y <= player.center.y + billRadius;
+        return (this.center.x >= player.center.x - objectRadius)
+                && (this.center.x <= player.center.x + objectRadius)
+                && (this.center.y >= player.center.y - objectRadius)
+                && (this.center.y <= player.center.y + objectRadius);
     }
 
+    boolean hitPowerup(Powerup powerup) {
+        return (this.center.x >= powerup.center.x - objectRadius)
+                && (this.center.x <= powerup.center.x + objectRadius)
+                && (this.center.y >= powerup.center.y - objectRadius)
+                && (this.center.y <= powerup.center.y + objectRadius);
+    }
 }

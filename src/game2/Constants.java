@@ -1,5 +1,6 @@
 package game2;
 
+import static game2.Utilities.*;
 import javalib.worldimages.*;
 import java.awt.*;
 import java.util.*;
@@ -14,15 +15,20 @@ public interface Constants {
     Color playerColor = Color.red;
 
     // trail stuff
-    int maxTrailSize = 8;
+    int maxTrailSize = 5;
     ArrayList<Posn> trail = new ArrayList<Posn>();
 
-    // bill stuff
-    int billRadius = 20;
+    // object stuff
+    int wiggliness = 2;
+    int objectRadius = 20;
     int billStartX = 1320;
-    Posn bill1Start = new Posn(1320, 120);
-    Posn bill2Start = new Posn(1320, 400);
-    Posn bill3Start = new Posn(1320, 680);
+    int powerupTop = 120;
+    int powerupBottom = 680;
+    Posn bill1Start = new Posn(billStartX, 120);
+    Posn bill2Start = new Posn(billStartX, 400);
+    Posn bill3Start = new Posn(billStartX, 680);
+    Posn powerupStart = new Posn(1000, 400);
+    String[] powerupTypes = {"strongtail", "billwiper", "slowtime"};
 
     // other attributes
     int speedo = 4; // default max speed of bills

@@ -12,7 +12,7 @@ public interface Constants {
 
     // player stuff
     Posn playerStart = new Posn(720, 400);
-    Color playerColor = Color.red;
+    Color playerStartColor = new Color(55,200,255);
 
     // trail stuff
     int maxTrailSize = 5;
@@ -29,6 +29,7 @@ public interface Constants {
     Posn bill3Start = new Posn(billStartX, 680);
     Posn powerupStart = new Posn(1000, 400);
     String[] powerupTypes = {"strongtail", "billwiper", "slowtime"};
+    Color[] powerupColors = {new Color(255,0,0), new Color(0,255,0), new Color(0,0,255)};
 
     // other attributes
     int speedo = 4; // default max speed of bills

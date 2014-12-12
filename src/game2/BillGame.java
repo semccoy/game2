@@ -33,13 +33,25 @@ public class BillGame extends World implements Constants {
                 new OverlayImages(showScore(),
                         new OverlayImages(showStats(),
                                 new OverlayImages(showPowerups(),
-                                        new OverlayImages(background,
-                                                new OverlayImages(powerup.powerupImage(),
-                                                        new OverlayImages(bill1.billImage(),
-                                                                new OverlayImages(bill2.billImage(),
-                                                                        new OverlayImages(bill3.billImage(),
-                                                                                new OverlayImages(makeTrail(player),
-                                                                                        this.player.playerImage()))))))))));
+                                        new OverlayImages(showOptions(),
+                                                new OverlayImages(background,
+                                                        new OverlayImages(powerup.powerupImage(),
+                                                                new OverlayImages(bill1.billImage(),
+                                                                        new OverlayImages(bill2.billImage(),
+                                                                                new OverlayImages(bill3.billImage(),
+                                                                                        new OverlayImages(makeTrail(player),
+                                                                                                this.player.playerImage())))))))))));
+    }
+
+    public WorldImage showOptions() {
+        String canHopWorldsHuh;
+        if (score.score < 100) {
+            canHopWorldsHuh = "";
+        } else {
+            canHopWorldsHuh = "World hop available!";
+        }
+        System.out.println(canHopWorldsHuh);
+        return new TextImage(new Posn(WIDTH / 2 + 350, 60), canHopWorldsHuh, 40, Color.white);
     }
 
     public WorldImage makeTrail(Player player) {
@@ -74,12 +86,15 @@ public class BillGame extends World implements Constants {
         return newTrail;
     }
 
-    
-
     public World onKeyEvent(String key) {
+        if (score.score > 100) {
+            if (key.equals("g")) {
+                return new Pause(this.world, this.player);
+            }
+        }
         return new BillGame(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3, this.powerup);
     }
-    
+
 //    public WorldEnd worldEnds() {
 //        if (lives < 1) {
 //            return new WorldEnd(true,
@@ -93,23 +108,9 @@ public class BillGame extends World implements Constants {
 //            return new WorldEnd(false, this.makeImage());
 //        }
 //    }
-    
-
-
     public World onTick() {
-        // if you want to make it harder, increase speed as you get better
-//        if (score.score <= 50) {
-//            speedo = 4;
-//        } else if (score.score > 50) {
-//            speedo = 6;
-//        } else if (score.score > 100) {
-//            speedo = 8;
-//        }
-        // if score > some value, maybe 150, show an option to go to the other game
-        // maybe have to hit "g" or something to go to game2
         // if score is too low you lose because you're bad at this
         // if whacks is too high " "
-
         int rand = randomInt(0, 2);
 
         // bill --> player

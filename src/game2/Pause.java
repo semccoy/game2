@@ -1,17 +1,5 @@
 package game2;
 
-import static game2.Constants.HEIGHT;
-import static game2.Constants.WIDTH;
-import static game2.Constants.bill1Start;
-import static game2.Constants.bill2Start;
-import static game2.Constants.bill3Start;
-import static game2.Constants.objectRadius;
-import static game2.Constants.playerStart;
-import static game2.Constants.playerStartColor;
-import static game2.Constants.powerupColors;
-import static game2.Constants.powerupStart;
-import static game2.Constants.powerupTypes;
-import static game2.Game2.universe;
 import static game2.Utilities.*;
 import java.awt.*;
 import java.io.*;
@@ -44,7 +32,7 @@ public class Pause extends World implements Constants {
                 new OverlayImages(showScore(),
                         new OverlayImages(showStats(),
                                 new OverlayImages(showPowerups(),
-                                        new OverlayImages(background,
+                                        new OverlayImages(new RectangleImage(base, WIDTH - 200, HEIGHT - 200, Color.white),
                                                 this.player.playerImage())))));
     }
 

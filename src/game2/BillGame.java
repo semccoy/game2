@@ -2,6 +2,9 @@ package game2;
 
 import static game2.Utilities.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javalib.funworld.*;
 import javalib.worldimages.*;
 
@@ -84,7 +87,7 @@ public class BillGame extends World implements Constants {
         }
         return newTrail;
     }
-    
+
     public World onKeyEvent(String key) {
         // "+" for testing
         if (key.equals("+")) {
@@ -109,29 +112,29 @@ public class BillGame extends World implements Constants {
         if (playOnHuh.score.equals(0)) {
             if (score.score >= Pause.highscores.get(10)) {
                 finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
-                Pause.potentiallyInsertScore(score);
             } else {
                 finalText = "Too bad! Your score of " + score.score + " was NOT added to the highscores!";
-                Pause.potentiallyInsertScore(score);
             }
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
-                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2), finalText, 30, Color.white)));
+                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));
         } else {
             return new WorldEnd(false, this.makeImage());
         }
     }
 
     public World onTick() {
-        // if score is too low you lose because you're bad at this
-        // if whacks is too high " "
         int rand = randomInt(0, 2);
-
+        if (score.score <= -100) {
+            playOnHuh.increaseBy(-1);
+        }
+        if (whacks.score > 200) {
+            playOnHuh.increaseBy(-1);
+        }
         // bill --> player
         if (bill1.hitPlayer(player) || bill2.hitPlayer(player) || bill3.hitPlayer(player)) {
             whacks.increaseBy(1);
             score.increaseBy(-1);
         }
-
         // powerup --> player
         if (powerup.hitPlayer(player)) {
             powerupsGotten.increaseBy(1);
@@ -139,13 +142,11 @@ public class BillGame extends World implements Constants {
             player.color = powerup.color;
             score.increaseBy(3);
         }
-
         // bill --> powerup
         if (bill1.hitPowerup(powerup) || bill2.hitPowerup(powerup) || bill3.hitPowerup(powerup)) {
             powerup.type = powerupTypes[rand];
             powerup.color = powerupColors[rand];
         }
-
         // bill --> oob
         if (!bill1.inBounds()) {
             billSpawns.increaseBy(1);
@@ -159,7 +160,6 @@ public class BillGame extends World implements Constants {
             billSpawns.increaseBy(1);
             bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo / 2), Color.yellow);
         }
-
         // powerup --> oob
         if (!powerup.inBounds()) {
             powerupSpawns.increaseBy(1);
@@ -170,13 +170,11 @@ public class BillGame extends World implements Constants {
                 powerup = new Powerup(new Posn(randomInt(140, 300), 120), objectRadius, 0, 0, 2, powerupTypes[rand], powerupColors[rand]);
             }
         }
-
         if (player.type.equals("normal")) {
             if (wipesLeft.score == 0) {
                 player.color = playerStartColor;
             }
         }
-
         if (player.type.equals(powerupTypes[0])) {
             if (trail.size() == 5) {
                 if (bill1.hitTrail(trail)) {
@@ -194,20 +192,16 @@ public class BillGame extends World implements Constants {
                 }
             }
         }
-
         if (player.type.equals(powerupTypes[1])) {
             player.type = "normal";
             wipesLeft.increaseBy(1);
             score.increaseBy(3);
         }
-
         if (player.type.equals(powerupTypes[2])) {
             bill1.speed = bill2.speed = bill3.speed = powerup.speed = 1;
         }
-
         return new BillGame(this.world, this.player, this.bill1.moveBillTowards(player),
                 this.bill2.moveBillTowards(player), this.bill3.moveBillTowards(player),
                 this.powerup.movePowerupAwayFrom(player));
-
     }
 }

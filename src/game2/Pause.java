@@ -85,7 +85,7 @@ public class Pause extends World implements Constants {
                 Pause.potentiallyInsertScore(score);
             }
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
-                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2), finalText, 30, Color.white)));
+                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2+ 150), finalText, 30, Color.white)));
         } else {
             return new WorldEnd(false, this.makeImage());
         }

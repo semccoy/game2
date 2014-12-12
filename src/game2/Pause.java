@@ -44,7 +44,8 @@ public class Pause extends World implements Constants {
             for (int i = 0; i < 10; i++) {
                 OverlayImages temp = new OverlayImages(new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
                         (i + 1) + ".   " + Integer.toString(highscores.get(i)), 20, Color.white),
-                        new TextImage(new Posn( 200,200), "yes", 40, Color.white));
+                        new TextImage(new Posn(WIDTH / 2, HEIGHT/2 + 150),
+                                "Press 'B' to return to game. Press 'L' to update highscores.", 30, Color.white));
                 highscoreList = new OverlayImages(highscoreList, temp);
             }
             return highscoreList;
@@ -132,7 +133,7 @@ public class Pause extends World implements Constants {
         Collections.reverse(highscores);
     }
 
-    static ArrayList<Integer> backupHS = highscores;
+    static ArrayList<Integer> backupHS = new ArrayList<Integer>();
 
     public static void saveHighscores() throws IOException {
         FileWriter fileWriter = new FileWriter("highscores.txt");

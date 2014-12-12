@@ -32,13 +32,14 @@ public class BillGame extends World implements Constants {
         return new OverlayImages(this.world.makeImage(),
                 new OverlayImages(showScore(),
                         new OverlayImages(showStats(),
-                                new OverlayImages(background,
-                                        new OverlayImages(powerup.powerupImage(),
-                                                new OverlayImages(bill1.billImage(),
-                                                        new OverlayImages(bill2.billImage(),
-                                                                new OverlayImages(bill3.billImage(),
-                                                                        new OverlayImages(makeTrail(player),
-                                                                                this.player.playerImage())))))))));
+                                new OverlayImages(showPowerups(),
+                                        new OverlayImages(background,
+                                                new OverlayImages(powerup.powerupImage(),
+                                                        new OverlayImages(bill1.billImage(),
+                                                                new OverlayImages(bill2.billImage(),
+                                                                        new OverlayImages(bill3.billImage(),
+                                                                                new OverlayImages(makeTrail(player),
+                                                                                        this.player.playerImage()))))))))));
     }
 
     public WorldImage makeTrail(Player player) {
@@ -81,14 +82,26 @@ public class BillGame extends World implements Constants {
 
     public WorldImage showStats() {
         Color color = Color.white;
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 5, 25), "bills spawned: ", 15, color),
-                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 100, 25), billSpawns.print(), 15, color),
-                        new OverlayImages(new TextImage(new Posn(WIDTH / 5, 45), "times whacked: ", 15, color),
-                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 100, 45), whacks.print(), 15, color),
-                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 15, 65), "worlds fallen off of: ", 15, color),
-                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 100, 65), falls.print(), 15, color),
-                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 1, 85), "resets resetted: ", 15, color),
-                                                                new TextImage(new Posn(WIDTH / 5 + 100, 85), resets.print(), 15, color))))))));
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 95 +80, 25), "bills spawned: ", 15, color),
+                new OverlayImages(new TextImage(new Posn(WIDTH / 5+80, 25), billSpawns.print(), 15, color),
+                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 100+80, 45), "times whacked: ", 15, color),
+                                new OverlayImages(new TextImage(new Posn(WIDTH / 5+80, 45), whacks.print(), 15, color),
+                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 115+80, 65), "worlds fallen off of: ", 15, color),
+                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5+80, 65), falls.print(), 15, color),
+                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 101+80, 85), "resets resetted: ", 15, color),
+                                                                new TextImage(new Posn(WIDTH / 5+80, 85), resets.print(), 15, color))))))));
+    }
+
+    public WorldImage showPowerups() {
+        Color color = Color.white;
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 125+80, 25), "powerups spawned: ", 15, color),
+                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230+80, 25), powerupSpawns.print(), 15, color),
+                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 133+80, 45), "powerups gotten: ", 15, color),
+                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230+80, 45), powerupsGotten.print(), 15, color),
+                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 158+80, 65), "pokes left: ", 15, color),
+                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230+80, 65), pokesLeft.print(), 15, color),
+                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 160+80, 85), "wipes left: ", 15, color),
+                                                                new TextImage(new Posn(WIDTH / 5 + 230+80, 85), wipesLeft.print(), 15, color))))))));
     }
 
     public World onKeyEvent(String key) {
@@ -159,6 +172,7 @@ public class BillGame extends World implements Constants {
                 if (bill1.hitTrail(trail)) {
                     score.increaseBy(3);
                     bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                    powerup = new Powerup(new Posn(randomInt(140, 300), 680), objectRadius, 0, 0, 2, powerupTypes[rand], powerupColors[rand]);
                 } else if (bill2.hitTrail(trail)) {
                     score.increaseBy(3);
                     bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
@@ -166,6 +180,14 @@ public class BillGame extends World implements Constants {
                     score.increaseBy(3);
                     bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                 }
+            }
+        }
+
+        if (player.type.equals(powerupTypes[1])) {
+            wipesLeft.increaseBy(1);
+            player.type = "normal";
+            if (wipesLeft.score == 0) {
+                player.color = playerStartColor;
             }
         }
 

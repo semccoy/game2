@@ -20,6 +20,7 @@ public interface Constants {
 
     // object stuff
     int wiggliness = 2;
+    int speedo = 4; // default max speed of bills
     int objectRadius = 20;
     int billStartX = 1320;
     int powerupTop = 120;
@@ -31,14 +32,19 @@ public interface Constants {
     String[] powerupTypes = {"trailwhip", "billwiper", "slowtime"};
     Color[] powerupColors = {new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255)};
 
-    // other attributes
-    int speedo = 4; // default max speed of bills
+    // stat attributes
     Score score = new Score(0);
     Score whacks = new Score(0);
     Score billSpawns = new Score(3);
     Score falls = new Score(0);
     Score resets = new Score(0);
-
+    
+    // powerup attributes
+    Score powerupSpawns = new Score(1);
+    Score powerupsGotten = new Score(0);
+    Score pokesLeft = new Score(0);
+    Score wipesLeft = new Score(0);
+    
     // world stuff
     boolean thisIsTheEnd = false;
 

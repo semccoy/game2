@@ -84,8 +84,17 @@ public class BillGame extends World implements Constants {
         }
         return newTrail;
     }
-
+    
     public World onKeyEvent(String key) {
+        // "+" for testing
+        if (key.equals("+")) {
+            score.increaseBy(1000);
+        }
+        // "l" for "leave"
+        if (key.equals("l")) {
+            playOnHuh.increaseBy(-1);
+        }
+        // "g" for "go"
         if (score.score > 100) {
             if (key.equals("g")) {
                 player.color = playerStartColor;
@@ -95,19 +104,23 @@ public class BillGame extends World implements Constants {
         return new BillGame(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3, this.powerup);
     }
 
-//    public WorldEnd worldEnds() {
-//        if (lives < 1) {
-//            return new WorldEnd(true,
-//                    new OverlayImages(background,
-//                            new OverlayImages(new TextImage(new Posn(screenWIDTH / 2, screenHEIGHT / 2),
-//                                            "GAME OVER!!!!", 30, 1, new Black()),
-//                                    new TextImage(new Posn(screenWIDTH / 2, screenHEIGHT / 2 + 20),
-//                                            "Final Score:   " + score,
-//                                            20, 1, new Black()))));
-//        } else {
-//            return new WorldEnd(false, this.makeImage());
-//        }
-//    }
+    public WorldEnd worldEnds() {
+        String finalText;
+        if (playOnHuh.score.equals(0)) {
+            if (score.score >= Pause.highscores.get(10)) {
+                finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
+                Pause.potentiallyInsertScore(score);
+            } else {
+                finalText = "Too bad! Your score of " + score.score + " was NOT added to the highscores!";
+                Pause.potentiallyInsertScore(score);
+            }
+            return new WorldEnd(true, new OverlayImages(this.makeImage(),
+                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2), finalText, 30, Color.white)));
+        } else {
+            return new WorldEnd(false, this.makeImage());
+        }
+    }
+
     public World onTick() {
         // if score is too low you lose because you're bad at this
         // if whacks is too high " "

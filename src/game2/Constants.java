@@ -44,10 +44,11 @@ public interface Constants {
     Score powerupsGotten = new Score(0);
     Score pokes = new Score(0);
     Score wipesLeft = new Score(0);
+    
     // timesSlowed?
     
     // world stuff
-    boolean thisIsTheEnd = false;
+    Score playOnHuh = new Score(1);
 
     // display stuff
     int step = 40;

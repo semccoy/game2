@@ -41,7 +41,7 @@ public class Pause extends World implements Constants {
     public WorldImage showHighscores() {
         for (int i = 0; i < 10; i++) {
             TextImage temp = new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
-                    (i+1) + ".   " + Integer.toString(highscores.get(i)), 20, Color.white);
+                    (i + 1) + ".   " + Integer.toString(highscores.get(i)), 20, Color.white);
             highscoreList = new OverlayImages(highscoreList, temp);
         }
         return highscoreList;
@@ -52,6 +52,15 @@ public class Pause extends World implements Constants {
     }
 
     public World onKeyEvent(String key) {
+        // "+" for testing
+        if (key.equals("+")) {
+            score.increaseBy(1000);
+        }
+        // "l" for "leave"
+        if (key.equals("l")) {
+            playOnHuh.increaseBy(-1);
+        }
+        // "b" for "BillGame"
         if (key.equals("b")) {
             int rand = randomInt(0, 2);
             return new BillGame(new Game2(universe),
@@ -62,6 +71,23 @@ public class Pause extends World implements Constants {
                     new Powerup(powerupStart, 20, 0, 0, randomInt(1, 4), powerupTypes[rand], powerupColors[rand]));
         } else {
             return new Pause(this.world, this.player.movePlayer(key));
+        }
+    }
+
+    public WorldEnd worldEnds() {
+        String finalText;
+        if (playOnHuh.score.equals(0)) {
+            if (score.score >= Pause.highscores.get(10)) {
+                finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
+                Pause.potentiallyInsertScore(score);
+            } else {
+                finalText = "Too bad! Your score of " + score.score + " was NOT added to the highscores!";
+                Pause.potentiallyInsertScore(score);
+            }
+            return new WorldEnd(true, new OverlayImages(this.makeImage(),
+                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2), finalText, 30, Color.white)));
+        } else {
+            return new WorldEnd(false, this.makeImage());
         }
     }
 

@@ -40,16 +40,22 @@ public class Pause extends World implements Constants {
     }
 
     public WorldImage showHighscores() {
-        for (int i = 0; i < 10; i++) {
-            TextImage temp = new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
-                    (i + 1) + ".   " + Integer.toString(highscores.get(i)), 20, Color.white);
-            highscoreList = new OverlayImages(highscoreList, temp);
+        if (playOnHuh.score > 0) {
+            for (int i = 0; i < 10; i++) {
+                OverlayImages temp = new OverlayImages(new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
+                        (i + 1) + ".   " + Integer.toString(highscores.get(i)), 20, Color.white),
+                        new TextImage(new Posn( 200,200), "yes", 40, Color.white));
+                highscoreList = new OverlayImages(highscoreList, temp);
+            }
+            return highscoreList;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                TextImage temp = new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
+                        (i + 1) + ".   " + Integer.toString(backupHS.get(i)), 20, Color.white);
+                highscoreList = new OverlayImages(highscoreList, temp);
+            }
+            return highscoreList;
         }
-        return highscoreList;
-
-//        Color color = Color.white;
-//        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "score", 20, color),
-//                new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, color));
     }
 
     public WorldImage showOptions() {
@@ -84,12 +90,6 @@ public class Pause extends World implements Constants {
         String finalText;
 
         if (playOnHuh.score.equals(0)) {
-            try {
-                accessHighscores();
-            } catch (IOException ex) {
-                System.out.println("accessHighscores failure" + ex);
-            }
-
             if (score.score >= highscores.get(highscores.size() - 1)) {
                 insertScore(score);
                 finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
@@ -132,6 +132,8 @@ public class Pause extends World implements Constants {
         Collections.reverse(highscores);
     }
 
+    static ArrayList<Integer> backupHS = highscores;
+
     public static void saveHighscores() throws IOException {
         FileWriter fileWriter = new FileWriter("highscores.txt");
         PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -143,5 +145,6 @@ public class Pause extends World implements Constants {
             printWriter.println(currentLine);
         }
         fileWriter.close();
+        backupHS = highscores;
     }
 }

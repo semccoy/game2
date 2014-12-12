@@ -111,12 +111,6 @@ public class BillGame extends World implements Constants {
         String finalText;
 
         if (playOnHuh.score.equals(0)) {
-            try {
-                Pause.accessHighscores();
-            } catch (IOException ex) {
-                System.out.println("accessHighscores failure" + ex);
-            }
-
             if (score.score >= Pause.highscores.get(Pause.highscores.size() - 1)) {
                 Pause.insertScore(score);
                 finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
@@ -131,6 +125,7 @@ public class BillGame extends World implements Constants {
             } catch (IOException ex) {
                 System.out.println("saveHighscores failure" + ex);
             }
+            
 
 //            System.out.println("last in list --- " + score.score);
 //            System.out.println("last in list --- " + Pause.highscores.get(Pause.highscores.size() - 1));

@@ -25,7 +25,7 @@ public class Game2 extends World implements Constants {
     public static void main(String[] args) throws Exception {
         int rand = randomInt(0, 2);
         BillGame game = new BillGame(new Game2(universe),
-                new Player(playerStart, 40, 40, playerStartColor),
+                new Player(playerStart, 40, 40, "normal", playerStartColor),
                 new Bill(bill1Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
                 new Bill(bill2Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
                 new Bill(bill3Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),

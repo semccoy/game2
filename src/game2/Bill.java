@@ -2,6 +2,7 @@ package game2;
 
 import static game2.Utilities.*;
 import java.awt.*;
+import java.util.ArrayList;
 import javalib.worldimages.*;
 
 public class Bill implements Constants, BoundedObject {
@@ -57,16 +58,23 @@ public class Bill implements Constants, BoundedObject {
     }
 
     boolean hitPlayer(Player player) {
-        return (this.center.x >= player.center.x - objectRadius)
-                && (this.center.x <= player.center.x + objectRadius)
-                && (this.center.y >= player.center.y - objectRadius)
-                && (this.center.y <= player.center.y + objectRadius);
+        return (this.center.x >= player.center.x - 2 * objectRadius)
+                && (this.center.x <= player.center.x + 2 * objectRadius)
+                && (this.center.y >= player.center.y - 2 * objectRadius)
+                && (this.center.y <= player.center.y + 2 * objectRadius);
     }
 
     boolean hitPowerup(Powerup powerup) {
-        return (this.center.x >= powerup.center.x - objectRadius)
-                && (this.center.x <= powerup.center.x + objectRadius)
-                && (this.center.y >= powerup.center.y - objectRadius)
-                && (this.center.y <= powerup.center.y + objectRadius);
+        return (this.center.x >= powerup.center.x - 2 * objectRadius)
+                && (this.center.x <= powerup.center.x + 2 * objectRadius)
+                && (this.center.y >= powerup.center.y - 2 * objectRadius)
+                && (this.center.y <= powerup.center.y + 2 * objectRadius);
+    }
+
+    boolean hitTrail(ArrayList<Posn> trail) {
+        return (this.center.x >= trail.get(0).x - 2 * objectRadius)
+                && (this.center.x <= trail.get(0).x + 2 * objectRadius)
+                && (this.center.y >= trail.get(0).y - 2 * objectRadius)
+                && (this.center.y <= trail.get(0).y + 2 * objectRadius);
     }
 }

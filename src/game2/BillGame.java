@@ -49,18 +49,22 @@ public class BillGame extends World implements Constants {
         for (int i = 0; i < trail.size(); i++) {
             tailSize = 5 + i * 30 / maxTrailSize;
             if (player.color == powerupColors[0]) {
+                // red
                 RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize,
                         new Color(r, (r - 55) - i * 100 / maxTrailSize, (r - 55) - i * 100 / maxTrailSize));
                 newTrail = new OverlayImages(newTrail, temp);
             } else if (player.color == powerupColors[1]) {
+                // green
                 RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize,
                         new Color((g - 55) - i * 100 / maxTrailSize, g, (g - 55) - i * 100 / maxTrailSize));
                 newTrail = new OverlayImages(newTrail, temp);
             } else if (player.color == powerupColors[2]) {
+                // blue
                 RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize,
                         new Color((b - 55) - i * 100 / maxTrailSize, (b - 55) - i * 100 / maxTrailSize, b));
                 newTrail = new OverlayImages(newTrail, temp);
             } else {
+                // tealish
                 RectangleImage temp = new RectangleImage(trail.get(i), tailSize, tailSize,
                         new Color((r + 55) + i * 100 / maxTrailSize, g, (b - 55) - i * 100 / maxTrailSize));
                 newTrail = new OverlayImages(newTrail, temp);
@@ -110,11 +114,12 @@ public class BillGame extends World implements Constants {
         // bill --> player
         if (bill1.hitPlayer(player) || bill2.hitPlayer(player) || bill3.hitPlayer(player)) {
             whacks.increaseBy(1);
-            score.increaseBy(-3);
+            score.increaseBy(-1);
         }
 
         // powerup --> player
         if (powerup.hitPlayer(player)) {
+            player.type = powerup.type;
             player.color = powerup.color;
             score.increaseBy(3);
         }
@@ -146,6 +151,21 @@ public class BillGame extends World implements Constants {
                 powerup = new Powerup(new Posn(randomInt(140, 300), 680), objectRadius, 0, 0, 2, powerupTypes[rand], powerupColors[rand]);
             } else {
                 powerup = new Powerup(new Posn(randomInt(140, 300), 120), objectRadius, 0, 0, 2, powerupTypes[rand], powerupColors[rand]);
+            }
+        }
+
+        if (player.type.equals(powerupTypes[0])) {
+            if (trail.size() == 5) {
+                if (bill1.hitTrail(trail)) {
+                    score.increaseBy(3);
+                    bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                } else if (bill2.hitTrail(trail)) {
+                    score.increaseBy(3);
+                    bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                } else if (bill3.hitTrail(trail)) {
+                    score.increaseBy(3);
+                    bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                }
             }
         }
 

@@ -50,44 +50,54 @@ public class Player implements Constants, BoundedObject {
                 if (hitTopBorder()) {
                     falls.increaseBy(1);
                     score.increaseBy(-10);
+                    invisibleScore.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
                 score.increaseBy(1);
+                invisibleScore.increaseBy(1);
                 return new Player(new Posn(this.center.x, this.center.y - step), this.length, this.width, this.type, this.color);
             case "down":
                 if (hitBottomBorder()) {
                     falls.increaseBy(1);
                     score.increaseBy(-10);
+                    invisibleScore.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
                 score.increaseBy(1);
+                invisibleScore.increaseBy(1);
                 return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.type, this.color);
             case "left":
                 if (hitLeftBorder()) {
                     falls.increaseBy(1);
                     score.increaseBy(-10);
+                    invisibleScore.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
                 score.increaseBy(1);
+                invisibleScore.increaseBy(1);
                 return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.type, this.color);
             case "right":
                 if (hitRightBorder()) {
                     falls.increaseBy(1);
                     score.increaseBy(-10);
+                    invisibleScore.increaseBy(-10);
                     return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
                 score.increaseBy(1);
+                invisibleScore.increaseBy(1);
                 return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.type, this.color);
             case "x":
                 if (this.center != playerStart) {
                     resets.increaseBy(1);
                     score.increaseBy(-5);
+                    invisibleScore.increaseBy(-5);
                     return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
             case "w":
                 if (wipesLeft.score > 0) {
                     wipesLeft.increaseBy(-1);
                     score.increaseBy(5);
+                    invisibleScore.increaseBy(5);
                     BillGame.bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                     BillGame.bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                     BillGame.bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);

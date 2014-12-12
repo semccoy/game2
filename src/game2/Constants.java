@@ -34,6 +34,7 @@ public interface Constants {
 
     // stat attributes
     Score score = new Score(0);
+    Score invisibleScore = new Score(0);
     Score whacks = new Score(0);
     Score billSpawns = new Score(3);
     Score falls = new Score(0);

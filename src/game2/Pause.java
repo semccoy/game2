@@ -14,6 +14,7 @@ public class Pause extends World implements Constants {
 
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
     WorldImage highscoreList = new TextImage(new Posn(WIDTH / 2, 150), "HIGHSCORES:", 30, Color.white);
+    static ArrayList<Integer> backupHS = new ArrayList<Integer>();
 
     World world;
     Player player;
@@ -44,19 +45,19 @@ public class Pause extends World implements Constants {
             for (int i = 0; i < 10; i++) {
                 OverlayImages temp = new OverlayImages(new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
                         (i + 1) + ".   " + Integer.toString(highscores.get(i)), 20, Color.white),
-                        new TextImage(new Posn(WIDTH / 2, HEIGHT/2 + 150),
+                        new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150),
                                 "Press 'B' to return to game. Press 'L' to update highscores.", 30, Color.white));
                 highscoreList = new OverlayImages(highscoreList, temp);
             }
-            return highscoreList;
         } else {
             for (int i = 0; i < 10; i++) {
                 TextImage temp = new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
                         (i + 1) + ".   " + Integer.toString(backupHS.get(i)), 20, Color.white);
                 highscoreList = new OverlayImages(highscoreList, temp);
             }
-            return highscoreList;
+
         }
+        return highscoreList;
     }
 
     public WorldImage showOptions() {
@@ -68,6 +69,7 @@ public class Pause extends World implements Constants {
         // "+" for testing
         if (key.equals("+")) {
             score.increaseBy(100);
+            invisibleScore.increaseBy(100);
         }
         // "l" for "leave"
         if (key.equals("l")) {
@@ -76,6 +78,7 @@ public class Pause extends World implements Constants {
         // "b" for "BillGame"
         if (key.equals("b")) {
             int rand = randomInt(0, 2);
+            invisibleScore.score = 0; // reset invisible score if going to play again (need to get 100 more pts to come back)
             return new BillGame(new Game2(universe),
                     new Player(playerStart, 40, 40, "normal", playerStartColor),
                     new Bill(bill1Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
@@ -106,8 +109,6 @@ public class Pause extends World implements Constants {
                 System.out.println("saveHighscores failure" + ex);
             }
 
-//            System.out.println("last in list --- " + score.score);
-//            System.out.println("last in list --- " + highscores.get(highscores.size() - 1));
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
                     new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));
         } else {
@@ -132,8 +133,6 @@ public class Pause extends World implements Constants {
         Collections.sort(highscores);
         Collections.reverse(highscores);
     }
-
-    static ArrayList<Integer> backupHS = new ArrayList<Integer>();
 
     public static void saveHighscores() throws IOException {
         FileWriter fileWriter = new FileWriter("highscores.txt");

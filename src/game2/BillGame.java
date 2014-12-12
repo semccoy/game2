@@ -48,7 +48,7 @@ public class BillGame extends World implements Constants {
 
     public WorldImage showOptions() {
         String canHopWorldsHuh;
-        if (score.score < 100) {
+        if (invisibleScore.score < 100) {
             canHopWorldsHuh = "";
         } else {
             canHopWorldsHuh = "World hop available!";
@@ -92,13 +92,14 @@ public class BillGame extends World implements Constants {
         // "+" for testing
         if (key.equals("+")) {
             score.increaseBy(100);
+            invisibleScore.increaseBy(100);
         }
         // "l" for "leave"
         if (key.equals("l")) {
             playOnHuh.increaseBy(-1);
         }
         // "g" for "go"
-        if (score.score > 100) {
+        if (invisibleScore.score >= 100) {
             if (key.equals("g")) {
                 player.color = playerStartColor;
                 return new Pause(this.world, this.player);
@@ -125,10 +126,6 @@ public class BillGame extends World implements Constants {
             } catch (IOException ex) {
                 System.out.println("saveHighscores failure" + ex);
             }
-            
-
-//            System.out.println("last in list --- " + score.score);
-//            System.out.println("last in list --- " + Pause.highscores.get(Pause.highscores.size() - 1));
 
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
                     new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));
@@ -149,6 +146,7 @@ public class BillGame extends World implements Constants {
         if (bill1.hitPlayer(player) || bill2.hitPlayer(player) || bill3.hitPlayer(player)) {
             whacks.increaseBy(1);
             score.increaseBy(-1);
+            invisibleScore.increaseBy(-1);
         }
         // powerup --> player
         if (powerup.hitPlayer(player)) {
@@ -156,6 +154,7 @@ public class BillGame extends World implements Constants {
             player.type = powerup.type;
             player.color = powerup.color;
             score.increaseBy(3);
+            invisibleScore.increaseBy(3);
         }
         // bill --> powerup
         if (bill1.hitPowerup(powerup) || bill2.hitPowerup(powerup) || bill3.hitPowerup(powerup)) {
@@ -195,14 +194,17 @@ public class BillGame extends World implements Constants {
                 if (bill1.hitTrail(trail)) {
                     pokes.increaseBy(1);
                     score.increaseBy(3);
+                    invisibleScore.increaseBy(3);
                     bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                 } else if (bill2.hitTrail(trail)) {
                     pokes.increaseBy(1);
                     score.increaseBy(3);
+                    invisibleScore.increaseBy(3);
                     bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                 } else if (bill3.hitTrail(trail)) {
                     pokes.increaseBy(1);
                     score.increaseBy(3);
+                    invisibleScore.increaseBy(3);
                     bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                 }
             }
@@ -211,6 +213,7 @@ public class BillGame extends World implements Constants {
             player.type = "normal";
             wipesLeft.increaseBy(1);
             score.increaseBy(3);
+            invisibleScore.increaseBy(3);
         }
         if (player.type.equals(powerupTypes[2])) {
             bill1.speed = bill2.speed = bill3.speed = powerup.speed = 1;

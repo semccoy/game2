@@ -1,5 +1,9 @@
 package game2;
 
+import static game2.Constants.billStartX;
+import static game2.Constants.objectRadius;
+import static game2.Constants.speedo;
+import static game2.Utilities.randomInt;
 import java.awt.*;
 import javalib.worldimages.*;
 
@@ -58,12 +62,12 @@ public class Player implements Constants, BoundedObject {
                     return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
                 score.increaseBy(1);
-                return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width,this.type,  this.color);
+                return new Player(new Posn(this.center.x, this.center.y + step), this.length, this.width, this.type, this.color);
             case "left":
                 if (hitLeftBorder()) {
                     falls.increaseBy(1);
                     score.increaseBy(-10);
-                    return new Player(playerStart, this.length, this.width,this.type,  this.color);
+                    return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
                 score.increaseBy(1);
                 return new Player(new Posn(this.center.x - step, this.center.y), this.length, this.width, this.type, this.color);
@@ -71,15 +75,22 @@ public class Player implements Constants, BoundedObject {
                 if (hitRightBorder()) {
                     falls.increaseBy(1);
                     score.increaseBy(-10);
-                    return new Player(playerStart, this.length, this.width,this.type,  this.color);
+                    return new Player(playerStart, this.length, this.width, this.type, this.color);
                 }
                 score.increaseBy(1);
-                return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width,this.type,  this.color);
+                return new Player(new Posn(this.center.x + step, this.center.y), this.length, this.width, this.type, this.color);
             case "x":
                 if (this.center != playerStart) {
                     resets.increaseBy(1);
                     score.increaseBy(-5);
                     return new Player(playerStart, this.length, this.width, this.type, this.color);
+                }
+            case "w":
+                if (wipesLeft.score > 0) {
+                    wipesLeft.increaseBy(-1);
+                    BillGame.bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                    BillGame.bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                    BillGame.bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                 }
             default:
                 return new Player(this.center, this.length, this.width, this.type, this.color);

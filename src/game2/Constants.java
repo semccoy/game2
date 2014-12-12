@@ -42,7 +42,7 @@ public interface Constants {
     // powerup attributes
     Score powerupSpawns = new Score(1);
     Score powerupsGotten = new Score(0);
-    Score pokesLeft = new Score(0);
+    Score pokes = new Score(0);
     Score wipesLeft = new Score(0);
     
     // world stuff

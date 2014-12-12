@@ -16,7 +16,6 @@ public class Player implements Constants, BoundedObject {
     Color color;
 
     // TODO:
-    // store powerups in trail/recolor if x, or if y, or something
     // Persistent player attributes.
     // For example, the player in Zork carries various items and can use and dispose of them throughout the map.
     public Player(Posn center, int length, int width, String type, Color color) {

@@ -1,5 +1,6 @@
 package game2;
 
+import static game2.Game2.*;
 import static game2.Utilities.*;
 import java.awt.Color;
 import javalib.funworld.*;
@@ -132,6 +133,7 @@ public class BillGame extends World implements Constants {
 
         // powerup --> player
         if (powerup.hitPlayer(player)) {
+            powerupsGotten.increaseBy(1);
             player.type = powerup.type;
             player.color = powerup.color;
             score.increaseBy(3);
@@ -159,6 +161,7 @@ public class BillGame extends World implements Constants {
 
         // powerup --> oob
         if (!powerup.inBounds()) {
+            powerupSpawns.increaseBy(1);
             int randy = randomInt(0, 1);
             if (randy == 0) {
                 powerup = new Powerup(new Posn(randomInt(140, 300), 680), objectRadius, 0, 0, 2, powerupTypes[rand], powerupColors[rand]);
@@ -195,6 +198,10 @@ public class BillGame extends World implements Constants {
             player.type = "normal";
             wipesLeft.increaseBy(1);
             score.increaseBy(3);
+        }
+
+        if (player.type.equals(powerupTypes[2])) {
+            bill1.speed = bill2.speed = bill3.speed = powerup.speed = 1;
         }
 
         return new BillGame(this.world, this.player, this.bill1.moveBillTowards(player),

@@ -4,6 +4,7 @@ import static game2.Utilities.*;
 import javalib.funworld.*;
 import javalib.worldimages.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Game2 extends World implements Constants {
 
@@ -23,10 +24,7 @@ public class Game2 extends World implements Constants {
     }
 
     public static void main(String[] args) throws Exception {
-        Pause.displayHighscores();
-        Pause.saveHighscores();
-        Pause.displayHighscores();
-
+        Pause.accessHighscores();
         int rand = randomInt(0, 2);
         BillGame game = new BillGame(new Game2(universe),
                 new Player(playerStart, 40, 40, "normal", playerStartColor),
@@ -36,5 +34,4 @@ public class Game2 extends World implements Constants {
                 new Powerup(powerupStart, 20, 0, 0, randomInt(1, 4), powerupTypes[rand], powerupColors[rand]));
         game.bigBang(WIDTH, HEIGHT, .01);
     }
-
 }

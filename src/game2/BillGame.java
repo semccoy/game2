@@ -91,7 +91,7 @@ public class BillGame extends World implements Constants {
     public World onKeyEvent(String key) {
         // "+" for testing
         if (key.equals("+")) {
-            score.increaseBy(1000);
+            score.increaseBy(100);
         }
         // "l" for "leave"
         if (key.equals("l")) {
@@ -109,14 +109,32 @@ public class BillGame extends World implements Constants {
 
     public WorldEnd worldEnds() {
         String finalText;
+
         if (playOnHuh.score.equals(0)) {
-            if (score.score >= Pause.highscores.get(10)) {
+            try {
+                Pause.accessHighscores();
+            } catch (IOException ex) {
+                System.out.println("accessHighscores failure" + ex);
+            }
+
+            if (score.score >= Pause.highscores.get(Pause.highscores.size() - 1)) {
+                Pause.insertScore(score);
                 finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
             } else if (score.score <= -100) {
                 finalText = "You lose! Your score of " + score.score + " was really bad! :(";
             } else {
                 finalText = "Too bad! Your score of " + score.score + " was too low to be added to the highscores!";
             }
+
+            try {
+                Pause.saveHighscores();
+            } catch (IOException ex) {
+                System.out.println("saveHighscores failure" + ex);
+            }
+
+//            System.out.println("last in list --- " + score.score);
+//            System.out.println("last in list --- " + Pause.highscores.get(Pause.highscores.size() - 1));
+
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
                     new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));
         } else {

@@ -33,9 +33,10 @@ public class Pause extends World implements Constants {
                 new OverlayImages(showScore(),
                         new OverlayImages(showStats(),
                                 new OverlayImages(showPowerups(),
-                                        new OverlayImages(background,
-                                                new OverlayImages(this.player.playerImage(),
-                                                        showHighscores()))))));
+                                        new OverlayImages(showOptions(),
+                                                new OverlayImages(background,
+                                                        new OverlayImages(this.player.playerImage(),
+                                                                showHighscores())))))));
     }
 
     public WorldImage showHighscores() {
@@ -51,10 +52,15 @@ public class Pause extends World implements Constants {
 //                new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, color));
     }
 
+    public WorldImage showOptions() {
+        String canHopWorldsHuh = "World hop available!";
+        return new TextImage(new Posn(WIDTH / 2 + 350, 60), canHopWorldsHuh, 40, Color.white);
+    }
+
     public World onKeyEvent(String key) {
         // "+" for testing
         if (key.equals("+")) {
-            score.increaseBy(1000);
+            score.increaseBy(100);
         }
         // "l" for "leave"
         if (key.equals("l")) {
@@ -76,39 +82,54 @@ public class Pause extends World implements Constants {
 
     public WorldEnd worldEnds() {
         String finalText;
+
         if (playOnHuh.score.equals(0)) {
-            if (score.score >= Pause.highscores.get(10)) {
-                finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
-                Pause.potentiallyInsertScore(score);
-            } else {
-                finalText = "Too bad! Your score of " + score.score + " was NOT added to the highscores!";
-                Pause.potentiallyInsertScore(score);
+            try {
+                accessHighscores();
+            } catch (IOException ex) {
+                System.out.println("accessHighscores failure" + ex);
             }
+
+            if (score.score >= highscores.get(highscores.size() - 1)) {
+                insertScore(score);
+                finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
+            } else if (score.score <= -100) {
+                finalText = "You lose! Your score of " + score.score + " was really bad! :(";
+            } else {
+                finalText = "Too bad! Your score of " + score.score + " was too low to be added to the highscores!";
+            }
+
+            try {
+                saveHighscores();
+            } catch (IOException ex) {
+                System.out.println("saveHighscores failure" + ex);
+            }
+
+//            System.out.println("last in list --- " + score.score);
+//            System.out.println("last in list --- " + highscores.get(highscores.size() - 1));
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
-                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2+ 150), finalText, 30, Color.white)));
+                    new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));
         } else {
             return new WorldEnd(false, this.makeImage());
         }
     }
 
-    public static void displayHighscores() throws IOException {
+    public static void accessHighscores() throws IOException {
         FileReader fileReader = new FileReader("highscores.txt");
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line = bufferedReader.readLine();
         for (int i = 0; i < 10; i++) {
             highscores.add(Integer.parseInt(line));
-//            System.out.println("" + highscores.get(i));
+            System.out.println("" + highscores.get(i));
             line = bufferedReader.readLine();
         }
         fileReader.close();
     }
 
-    public static void potentiallyInsertScore(Score score) {
-        if (score.score > highscores.size()) {
-            highscores.add(score.score);
-            Collections.sort(highscores);
-            Collections.reverse(highscores);
-        }
+    public static void insertScore(Score score) {
+        highscores.add(5, score.score); // add score somewhere in the middle
+        Collections.sort(highscores);
+        Collections.reverse(highscores);
     }
 
     public static void saveHighscores() throws IOException {

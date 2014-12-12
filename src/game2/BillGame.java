@@ -112,8 +112,10 @@ public class BillGame extends World implements Constants {
         if (playOnHuh.score.equals(0)) {
             if (score.score >= Pause.highscores.get(10)) {
                 finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
+            } else if (score.score <= -100) {
+                finalText = "You lose! Your score of " + score.score + " was really bad! :(";
             } else {
-                finalText = "Too bad! Your score of " + score.score + " was NOT added to the highscores!";
+                finalText = "Too bad! Your score of " + score.score + " was too low to be added to the highscores!";
             }
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
                     new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));

@@ -97,7 +97,7 @@ public class Pause extends World implements Constants {
         String line = bufferedReader.readLine();
         for (int i = 0; i < 10; i++) {
             highscores.add(Integer.parseInt(line));
-            System.out.println("" + highscores.get(i));
+//            System.out.println("" + highscores.get(i));
             line = bufferedReader.readLine();
         }
         fileReader.close();

@@ -1,8 +1,7 @@
 package game2;
 
-import static game2.Game2.*;
 import static game2.Utilities.*;
-import java.awt.Color;
+import java.awt.*;
 import javalib.funworld.*;
 import javalib.worldimages.*;
 
@@ -75,39 +74,27 @@ public class BillGame extends World implements Constants {
         return newTrail;
     }
 
-    public WorldImage showScore() {
-        Color color = Color.white;
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "score", 20, color),
-                new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, color));
-    }
-
-    public WorldImage showStats() {
-        Color color = Color.white;
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 95 + 80, 25), "bills spawned: ", 15, color),
-                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 25), billSpawns.print(), 15, color),
-                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 100 + 80, 45), "times whacked: ", 15, color),
-                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 45), whacks.print(), 15, color),
-                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 115 + 80, 65), "worlds fallen off of: ", 15, color),
-                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 65), falls.print(), 15, color),
-                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 101 + 80, 85), "resets resetted: ", 15, color),
-                                                                new TextImage(new Posn(WIDTH / 5 + 80, 85), resets.print(), 15, color))))))));
-    }
-
-    public WorldImage showPowerups() {
-        Color color = Color.white;
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 125 + 80, 25), "powerups spawned: ", 15, color),
-                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230 + 80, 25), powerupSpawns.print(), 15, color),
-                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 133 + 80, 45), "powerups gotten: ", 15, color),
-                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230 + 80, 45), powerupsGotten.print(), 15, color),
-                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 158 + 70, 65), "pokes poked: ", 15, color),
-                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230 + 80, 65), pokes.print(), 15, color),
-                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 160 + 80, 85), "wipes left: ", 15, color),
-                                                                new TextImage(new Posn(WIDTH / 5 + 230 + 80, 85), wipesLeft.print(), 15, color))))))));
-    }
+    
 
     public World onKeyEvent(String key) {
         return new BillGame(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3, this.powerup);
     }
+    
+//    public WorldEnd worldEnds() {
+//        if (lives < 1) {
+//            return new WorldEnd(true,
+//                    new OverlayImages(background,
+//                            new OverlayImages(new TextImage(new Posn(screenWIDTH / 2, screenHEIGHT / 2),
+//                                            "GAME OVER!!!!", 30, 1, new Black()),
+//                                    new TextImage(new Posn(screenWIDTH / 2, screenHEIGHT / 2 + 20),
+//                                            "Final Score:   " + score,
+//                                            20, 1, new Black()))));
+//        } else {
+//            return new WorldEnd(false, this.makeImage());
+//        }
+//    }
+    
+
 
     public World onTick() {
         // if you want to make it harder, increase speed as you get better

@@ -2,6 +2,7 @@ package game2;
 
 import java.awt.*;
 import java.util.Random;
+import javalib.worldimages.*;
 
 public class Utilities implements Constants {
 
@@ -11,6 +12,36 @@ public class Utilities implements Constants {
 
     public static Color randomColor() {
         return new Color(randomInt(0, 255), randomInt(0, 255), randomInt(0, 255));
+    }
+
+    public static WorldImage showScore() {
+        Color color = Color.white;
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "score", 20, color),
+                new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, color));
+    }
+
+    public static WorldImage showStats() {
+        Color color = Color.white;
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 95 + 80, 25), "bills spawned: ", 15, color),
+                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 25), billSpawns.print(), 15, color),
+                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 100 + 80, 45), "times whacked: ", 15, color),
+                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 45), whacks.print(), 15, color),
+                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 115 + 80, 65), "worlds fallen off of: ", 15, color),
+                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 65), falls.print(), 15, color),
+                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 101 + 80, 85), "resets resetted: ", 15, color),
+                                                                new TextImage(new Posn(WIDTH / 5 + 80, 85), resets.print(), 15, color))))))));
+    }
+
+    public static WorldImage showPowerups() {
+        Color color = Color.white;
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 125 + 80, 25), "powerups spawned: ", 15, color),
+                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230 + 80, 25), powerupSpawns.print(), 15, color),
+                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 133 + 80, 45), "powerups gotten: ", 15, color),
+                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230 + 80, 45), powerupsGotten.print(), 15, color),
+                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 158 + 70, 65), "pokes poked: ", 15, color),
+                                                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 230 + 80, 65), pokes.print(), 15, color),
+                                                        new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 160 + 80, 85), "wipes left: ", 15, color),
+                                                                new TextImage(new Posn(WIDTH / 5 + 230 + 80, 85), wipesLeft.print(), 15, color))))))));
     }
 
 }

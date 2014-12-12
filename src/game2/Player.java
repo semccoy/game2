@@ -87,6 +87,7 @@ public class Player implements Constants, BoundedObject {
             case "w":
                 if (wipesLeft.score > 0) {
                     wipesLeft.increaseBy(-1);
+                    score.increaseBy(5);
                     BillGame.bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                     BillGame.bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                     BillGame.bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);

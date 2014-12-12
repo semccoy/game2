@@ -23,6 +23,11 @@ public class Game2 extends World implements Constants {
     }
 
     public static void main(String[] args) throws Exception {
+        Pause.displayHighscores();
+        Pause.potentiallyInsertScore(new Score(115));
+        Pause.saveHighscores();
+        Pause.displayHighscores();
+
         int rand = randomInt(0, 2);
         BillGame game = new BillGame(new Game2(universe),
                 new Player(playerStart, 40, 40, "normal", playerStartColor),

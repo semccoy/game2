@@ -24,7 +24,7 @@ public class Game2 extends World implements Constants {
 
     public static void main(String[] args) throws Exception {
         Pause.displayHighscores();
-        Pause.potentiallyInsertScore(new Score(115));
+        Pause.potentiallyInsertScore(new Score(121));
         Pause.saveHighscores();
         Pause.displayHighscores();
 

@@ -50,7 +50,6 @@ public class BillGame extends World implements Constants {
         } else {
             canHopWorldsHuh = "World hop available!";
         }
-        System.out.println(canHopWorldsHuh);
         return new TextImage(new Posn(WIDTH / 2 + 350, 60), canHopWorldsHuh, 40, Color.white);
     }
 
@@ -89,6 +88,7 @@ public class BillGame extends World implements Constants {
     public World onKeyEvent(String key) {
         if (score.score > 100) {
             if (key.equals("g")) {
+                player.color = playerStartColor;
                 return new Pause(this.world, this.player);
             }
         }

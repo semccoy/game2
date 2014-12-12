@@ -13,6 +13,7 @@ public class Pause extends World implements Constants {
     // reminders of how to game
 
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
+    WorldImage highscoreList = new TextImage(new Posn(WIDTH / 2, 150), "HIGHSCORES:", 30, Color.white);
 
     World world;
     Player player;
@@ -32,14 +33,22 @@ public class Pause extends World implements Constants {
                 new OverlayImages(showScore(),
                         new OverlayImages(showStats(),
                                 new OverlayImages(showPowerups(),
-                                        new OverlayImages(new RectangleImage(base, WIDTH - 200, HEIGHT - 200, Color.white),
-                                                this.player.playerImage())))));
+                                        new OverlayImages(background,
+                                                new OverlayImages(this.player.playerImage(),
+                                                        showHighscores()))))));
     }
 
-    public WorldImage showScore() {
-        Color color = Color.white;
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "score", 20, color),
-                new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, color));
+    public WorldImage showHighscores() {
+        for (int i = 0; i < 10; i++) {
+            TextImage temp = new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
+                    (i+1) + ".   " + Integer.toString(highscores.get(i)), 20, Color.white);
+            highscoreList = new OverlayImages(highscoreList, temp);
+        }
+        return highscoreList;
+
+//        Color color = Color.white;
+//        return new OverlayImages(new TextImage(new Posn(WIDTH / 2, 40), "score", 20, color),
+//                new TextImage(new Posn(WIDTH / 2, 65), score.print(), 20, color));
     }
 
     public World onKeyEvent(String key) {

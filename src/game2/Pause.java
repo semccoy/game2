@@ -50,10 +50,12 @@ public class Pause extends World implements Constants {
                 highscoreList = new OverlayImages(highscoreList, temp);
             }
         } else {
-            for (int i = 0; i < 10; i++) {
-                TextImage temp = new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
-                        (i + 1) + ".   " + Integer.toString(backupHS.get(i)), 20, Color.white);
-                highscoreList = new OverlayImages(highscoreList, temp);
+            if (!backupHS.isEmpty()) {
+                for (int i = 0; i < 10; i++) {
+                    TextImage temp = new TextImage(new Posn(WIDTH / 2, 200 + 25 * i),
+                            (i + 1) + ".   " + Integer.toString(backupHS.get(i)), 20, Color.white);
+                    highscoreList = new OverlayImages(highscoreList, temp);
+                }
             }
         }
         return highscoreList;

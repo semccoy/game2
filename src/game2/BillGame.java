@@ -117,8 +117,10 @@ public class BillGame extends World implements Constants {
                 finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
             } else if (score.score <= -100) {
                 finalText = "You lose! Your score of " + score.score + " was really bad! :(";
+            } else if (whacks.score > 200) {
+                finalText = "You lose! You've been whacked " + whacks.score + " times, which is just too many! :(";
             } else {
-                finalText = "Too bad! Your score of " + score.score + " was too low to be added to the highscores!";
+                finalText = "Too bad! Your score of " + score.score + " was too low to be added to the highscores! :(";
             }
 
             try {

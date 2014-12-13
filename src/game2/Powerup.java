@@ -39,20 +39,18 @@ public class Powerup implements Constants, BoundedObject {
                 && (this.center.y >= player.center.y - 100);
     }
 
-    // make this use player coords
     public Powerup movePowerupAwayFrom(Player player) {
         if (this.center.y > 400) {
-            return new Powerup(new Posn(this.center.x + speed * 5, this.center.y - speed),
+            return new Powerup(new Posn(this.center.x + speed * 5 + player.center.x / 200, this.center.y - speed - player.center.y / 200),
                     this.radius, this.dx, this.dy, this.speed, this.type, this.color);
         } else {
-            return new Powerup(new Posn(this.center.x + speed * 5, this.center.y + speed),
+            return new Powerup(new Posn(this.center.x + speed * 5 + player.center.x / 200, this.center.y + speed + player.center.y / 200),
                     this.radius, this.dx, this.dy, this.speed, this.type, this.color);
         }
     }
 
     boolean inBounds() {
-        return //!(hitTopBorder())  && !(hitBottomBorder()) &&
-                !(hitLeftBorder()) && !(hitRightBorder());
+        return !(hitLeftBorder()) && !(hitRightBorder());
     }
 
     public boolean hitTopBorder() {

@@ -4,7 +4,6 @@ import static game2.Utilities.*;
 import javalib.funworld.*;
 import javalib.worldimages.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class Game2 extends World implements Constants {
 

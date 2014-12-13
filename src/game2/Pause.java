@@ -55,7 +55,6 @@ public class Pause extends World implements Constants {
                         (i + 1) + ".   " + Integer.toString(backupHS.get(i)), 20, Color.white);
                 highscoreList = new OverlayImages(highscoreList, temp);
             }
-
         }
         return highscoreList;
     }
@@ -92,7 +91,6 @@ public class Pause extends World implements Constants {
 
     public WorldEnd worldEnds() {
         String finalText;
-
         if (playOnHuh.score.equals(0)) {
             if (score.score >= highscores.get(highscores.size() - 1)) {
                 insertScore(score);
@@ -102,13 +100,11 @@ public class Pause extends World implements Constants {
             } else {
                 finalText = "Too bad! Your score of " + score.score + " was too low to be added to the highscores!";
             }
-
             try {
                 saveHighscores();
             } catch (IOException ex) {
                 System.out.println("saveHighscores failure" + ex);
             }
-
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
                     new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));
         } else {

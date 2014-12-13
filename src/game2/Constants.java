@@ -9,15 +9,12 @@ public interface Constants {
 
     // test stuff
     int numberOfTests = 0;
-
     // player stuff
     Posn playerStart = new Posn(720, 400);
     Color playerStartColor = new Color(55, 200, 255);
-
     // trail stuff
     int maxTrailSize = 5;
     public ArrayList<Posn> trail = new ArrayList<Posn>();
-
     // object stuff
     int wiggliness = 2;
     int speedo = 4; // default max speed of bills
@@ -31,7 +28,6 @@ public interface Constants {
     Posn powerupStart = new Posn(1000, 400);
     String[] powerupTypes = {"trailwhip", "billwiper", "slowtime"};
     Color[] powerupColors = {new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255)};
-
     // stat attributes
     Score score = new Score(0);
     Score invisibleScore = new Score(0);
@@ -39,18 +35,13 @@ public interface Constants {
     Score billSpawns = new Score(3);
     Score falls = new Score(0);
     Score resets = new Score(0);
-    
     // powerup attributes
     Score powerupSpawns = new Score(1);
     Score powerupsGotten = new Score(0);
     Score pokes = new Score(0);
     Score wipesLeft = new Score(0);
-    
-    // timesSlowed?
-    
     // world stuff
     Score playOnHuh = new Score(1);
-
     // display stuff
     int step = 40;
     int WIDTH = 1440;

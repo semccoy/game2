@@ -1,9 +1,6 @@
 package game2;
 
-import static game2.Constants.billStartX;
-import static game2.Constants.objectRadius;
-import static game2.Constants.speedo;
-import static game2.Utilities.randomInt;
+import static game2.Utilities.*;
 import java.awt.*;
 import javalib.worldimages.*;
 
@@ -15,9 +12,6 @@ public class Player implements Constants, BoundedObject {
     String type;
     Color color;
 
-    // TODO:
-    // Persistent player attributes.
-    // For example, the player in Zork carries various items and can use and dispose of them throughout the map.
     public Player(Posn center, int length, int width, String type, Color color) {
         this.center = center;
         this.length = length;
@@ -44,7 +38,6 @@ public class Player implements Constants, BoundedObject {
 
     public Player movePlayer(String key) {
         populatePlayerTrail();
-
         switch (key) {
             case "up":
                 if (hitTopBorder()) {

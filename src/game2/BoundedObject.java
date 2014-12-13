@@ -7,5 +7,4 @@ public interface BoundedObject {
     boolean hitBottomBorder();
 
     boolean hitLeftBorder();
-
 }

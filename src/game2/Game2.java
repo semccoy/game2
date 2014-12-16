@@ -23,6 +23,11 @@ public class Game2 extends World implements Constants {
     }
 
     public static void main(String[] args) throws Exception {
+        
+        Tests.testAllTheThings();
+        
+        
+        
         PauseWorld.accessHighscores();
         int rand = randomInt(0, 2);
         PlayWorld game = new PlayWorld(new Game2(universe),

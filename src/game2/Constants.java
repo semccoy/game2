@@ -8,7 +8,7 @@ import java.util.*;
 public interface Constants {
 
     // test stuff
-    int numberOfTests = 0;
+    int numberOfTests = 5000;
 
     // player stuff
     Posn playerStart = new Posn(720, 400);

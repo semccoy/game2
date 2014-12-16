@@ -1,7 +1,6 @@
 package game2;
 
 import static game2.Utilities.*;
-import java.awt.Color;
 import java.util.*;
 import javalib.worldimages.*;
 
@@ -39,6 +38,81 @@ public class Tests implements Constants {
         }
     }
 
+    public static void testPlayerInBounds(Player player) {
+        // if out of bounds, cannot be in bounds
+        if (player.hitTopBorder() || player.hitBottomBorder() || player.hitLeftBorder() || player.hitRightBorder()) {
+            if ((player.inBounds())) {
+                throw new RuntimeException("player in bounds check failed case 1a");
+            }
+            // and if not out of bounds, must be in bounds 
+        } else {
+            if (!(player.inBounds())) {
+                throw new RuntimeException("player in bounds check failed case 1b");
+            }
+        }
+        // if in bounds, cannot be out of bounds
+        if ((player.inBounds())) {
+            if (player.hitTopBorder() || player.hitBottomBorder() || player.hitLeftBorder() || player.hitRightBorder()) {
+                throw new RuntimeException("player in bounds check failed case 2a");
+            }
+            // and if not in bounds, must be out of bounds
+        } else {
+            if (!(player.hitTopBorder() || player.hitBottomBorder() || player.hitLeftBorder() || player.hitRightBorder())) {
+                throw new RuntimeException("player in bounds check failed case 2b");
+            }
+        }
+    }
+
+    public static void testDotInBounds(Dot dot) {
+        // if out of bounds, cannot be in bounds
+        if (dot.hitTopBorder() || dot.hitBottomBorder() || dot.hitLeftBorder()) {
+            if ((dot.inBounds())) {
+                throw new RuntimeException("dot in bounds check failed case 1a");
+            }
+            // and if not out of bounds, must be in bounds 
+        } else {
+            if (!(dot.inBounds())) {
+                throw new RuntimeException("dot in bounds check failed case 1b");
+            }
+        }
+        // if in bounds, cannot be out of bounds
+        if ((dot.inBounds())) {
+            if (dot.hitTopBorder() || dot.hitBottomBorder() || dot.hitLeftBorder()) {
+                throw new RuntimeException("dot in bounds check failed case 2a");
+            }
+            // and if not in bounds, must be out of bounds
+        } else {
+            if (!(dot.hitTopBorder() || dot.hitBottomBorder() || dot.hitLeftBorder())) {
+                throw new RuntimeException("dot in bounds check failed case 2b");
+            }
+        }
+    }
+
+    public static void testPowerupInBounds(Powerup powerup) {
+        // if out of bounds, cannot be in bounds
+        if (powerup.hitLeftBorder() || powerup.hitRightBorder()) {
+            if ((powerup.inBounds())) {
+                throw new RuntimeException("powerup in bounds check failed case 1a");
+            }
+            // and if not out of bounds, must be in bounds 
+        } else {
+            if (!(powerup.inBounds())) {
+                throw new RuntimeException("powerup in bounds check failed case 1b");
+            }
+        }
+        // if in bounds, cannot be out of bounds
+        if ((powerup.inBounds())) {
+            if (powerup.hitLeftBorder() || powerup.hitRightBorder()) {
+                throw new RuntimeException("powerup in bounds check failed case 2a");
+            }
+            // and if not in bounds, must be out of bounds
+        } else {
+            if (!(powerup.hitLeftBorder() || powerup.hitRightBorder())) {
+                throw new RuntimeException("powerup in bounds check failed case 2b");
+            }
+        }
+    }
+
     public static void testPlayerMovement(Player player, String direction) throws RuntimeException {
         int oldX = player.center.x;
         int oldY = player.center.y;
@@ -67,19 +141,19 @@ public class Tests implements Constants {
     }
 
     public static void testPlayerMovementEdge(Player player, String direction) throws RuntimeException {
-        if (direction.equals("up") & player.hitTopBorder()) {
+        if (direction.equals("up") && player.hitTopBorder()) {
             if (!(player.movePlayer("up").center.equals(playerStart))) {
                 throw new RuntimeException("moving up failed");
             }
-        } else if (direction.equals("down") & player.hitBottomBorder()) {
+        } else if (direction.equals("down") && player.hitBottomBorder()) {
             if (!(player.movePlayer("down").center.equals(playerStart))) {
                 throw new RuntimeException("moving down failed");
             }
-        } else if (direction.equals("left") & player.hitLeftBorder()) {
+        } else if (direction.equals("left") && player.hitLeftBorder()) {
             if (!(player.movePlayer("left").center.equals(playerStart))) {
                 throw new RuntimeException("moving left failed");
             }
-        } else if (direction.equals("right") & player.hitRightBorder()) {
+        } else if (direction.equals("right") && player.hitRightBorder()) {
             if (!(player.movePlayer("right").center.equals(playerStart))) {
                 throw new RuntimeException("moving right failed");
             }
@@ -119,31 +193,46 @@ public class Tests implements Constants {
 
     }
 
-
-    
-    
-    
-    
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
 
-            Posn randomCenter = new Posn(randomInt(120, 1320), randomInt(120, 680));
+            Posn randomCenterInBounds = new Posn(randomInt(120, 1320), randomInt(120, 680));
+            Posn randomCenterAnywhere = new Posn(randomInt(0, 1440), randomInt(0, 800));
             int randomSpeed = randomInt(1, 4);
             int randomSize = randomInt(1, 100);
             String randomType = randomString(100);
 
             randomDirection();
 
+            testPlayerInBounds(new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()));
+            testPlayerInBounds(new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
+
+            testDotInBounds(new Dot(randomCenterInBounds, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
+            testDotInBounds(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
+
+            testPowerupInBounds(new Powerup(randomCenterInBounds, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()));
+            testPowerupInBounds(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()));
+
             testPlayerMovement(new Player(playerStart, randomSize, randomSize, randomType, randomColor()), randomDirection());
-            testPlayerMovementEdge(new Player(randomCenter, randomSize, randomSize, randomType, randomColor()), randomDirection());
-            testDotMovement(new Dot(randomCenter, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
-                    new Player(randomCenter, randomSize, randomSize, randomType, randomColor()));
 
-            testPowerupMovement(new Powerup(randomCenter, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
-                    new Player(randomCenter, randomSize, randomSize, randomType, randomColor()));
+            testPlayerMovementEdge(new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()), randomDirection());
+            testPlayerMovementEdge(new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()), randomDirection());
 
+            testDotMovement(new Dot(randomCenterInBounds, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()));
+            testDotMovement(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
+
+            testPowerupMovement(new Powerup(randomCenterInBounds, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
+                    new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()));
+            testPowerupMovement(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
+
+//testDotInBounds
             /// inbounds check
             // collision check
+            //powerups work
+            //scores work
         }
     }
 

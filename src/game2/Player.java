@@ -4,7 +4,7 @@ import static game2.Utilities.*;
 import java.awt.*;
 import javalib.worldimages.*;
 
-public class Player implements Constants, BoundedObject {
+public class Player implements Constants{
 
     Posn center;
     int length;
@@ -99,13 +99,17 @@ public class Player implements Constants, BoundedObject {
                 return new Player(this.center, this.length, this.width, this.type, this.color);
         }
     }
+    
+    boolean inBounds() {
+        return !(hitTopBorder()) && !(hitBottomBorder()) && !(hitLeftBorder()) && !(hitRightBorder());
+    }
 
     public boolean hitTopBorder() {
         return this.center.y < 140;
     }
 
     public boolean hitBottomBorder() {
-        return this.center.y > 660;
+        return this.center.y > 700;
     }
 
     public boolean hitLeftBorder() {

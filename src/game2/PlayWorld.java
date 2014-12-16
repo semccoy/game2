@@ -121,6 +121,7 @@ public class PlayWorld extends World implements Constants {
             }
             try {
                 PauseWorld.saveHighscores();
+                System.out.println("Highscores after end of game:");
                 PauseWorld.printOutHighscores();
             } catch (IOException ex) {
                 System.out.println("saveHighscores or printOutHighscores failure" + ex);

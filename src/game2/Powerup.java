@@ -4,7 +4,7 @@ import static game2.Utilities.*;
 import java.awt.Color;
 import javalib.worldimages.*;
 
-public class Powerup implements Constants, BoundedObject {
+public class Powerup implements Constants {
 
     Posn center;
     int radius;
@@ -44,14 +44,6 @@ public class Powerup implements Constants, BoundedObject {
 
     boolean inBounds() {
         return !(hitLeftBorder()) && !(hitRightBorder());
-    }
-
-    public boolean hitTopBorder() {
-        return this.center.y < 140;
-    }
-
-    public boolean hitBottomBorder() {
-        return this.center.y > 660;
     }
 
     public boolean hitLeftBorder() {

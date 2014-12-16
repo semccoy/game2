@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import javalib.worldimages.*;
 
-public class Dot implements Constants, BoundedObject {
+public class Dot implements Constants {
 
     Posn center;
     int radius;

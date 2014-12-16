@@ -32,12 +32,9 @@ public class Bill implements Constants, BoundedObject {
     }
 
     public Bill moveBillTowards(Player player) {
-        int mx = this.center.x - player.center.x;
         int my = this.center.y - player.center.y;
         return new Bill(new Posn(this.center.x - speed * 5, this.center.y - randomInt(wiggliness - 1, wiggliness + 1) * my / step),
                 this.radius, this.dx, this.dy, this.speed, this.color);
-//        return new Bill(new Posn(this.center.x - randomInt(wiggliness - 1, wiggliness + 1) * mx / step,  this.center.y- speed * 5),
-//                this.radius, this.dx, this.dy, this.speed, this.color); // and return bills from bottom of screen?
     }
 
     boolean inBounds() {

@@ -8,16 +8,13 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 
 public class Pause extends World implements Constants {
-    // TODO:
-    //  highscores 
-    // reminders of how to game
-
-    static ArrayList<Integer> highscores = new ArrayList<Integer>();
-    WorldImage highscoreList = new TextImage(new Posn(WIDTH / 2, 150), "HIGHSCORES:", 30, Color.white);
-    static ArrayList<Integer> backupHS = new ArrayList<Integer>();
-
+    
     World world;
     Player player;
+
+    WorldImage highscoreList = new TextImage(new Posn(WIDTH / 2, 150), "HIGHSCORES:", 30, Color.white);
+    static ArrayList<Integer> highscores = new ArrayList<Integer>();
+    static ArrayList<Integer> backupHS = new ArrayList<Integer>();
 
     public Pause(World world, Player player) {
         super();
@@ -76,7 +73,7 @@ public class Pause extends World implements Constants {
         if (key.equals("l")) {
             playOnHuh.increaseBy(-1);
         }
-        // "b" for "BillGame"
+        // "b" for "back"
         if (key.equals("b")) {
             int rand = randomInt(0, 2);
             invisibleScore.score = 0; // reset invisible score if going to play again (need to get 100 more pts to come back)
@@ -120,7 +117,6 @@ public class Pause extends World implements Constants {
         String line = bufferedReader.readLine();
         for (int i = 0; i < 10; i++) {
             highscores.add(Integer.parseInt(line));
-            System.out.println("" + highscores.get(i));
             line = bufferedReader.readLine();
         }
         fileReader.close();

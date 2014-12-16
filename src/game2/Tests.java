@@ -6,17 +6,7 @@ import javalib.worldimages.*;
 
 public class Tests implements Constants {
 
-    static String stringThings = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-_=+[{]}|;:',<.>/?";
-    Random rand = new Random();
-
-    public static String randomString(int maxLength) {
-        int length = new Random().nextInt(maxLength);
-        StringBuilder newString = new StringBuilder("");
-        for (int i = 0; i < length; i++) {
-            newString.append(stringThings.charAt(new Random().nextInt(stringThings.length())));
-        }
-        return newString.toString();
-    }
+    
 
     public static String randomDirection() {
         // c/o Katherine
@@ -177,7 +167,6 @@ public class Tests implements Constants {
     public static void testPowerupMovement(Powerup powerup, Player player) throws RuntimeException {
         int oldX = powerup.center.x;
         int oldY = powerup.center.y;
-        // dot y-movement is variable and doesn't necessarily happen, so can't test as invariant
         if (!(powerup.movePowerupAwayFrom(player).center.x == oldX + powerup.speed * 5 + player.center.x / 200)) {
             throw new RuntimeException("powerup x movement failed");
         }
@@ -228,8 +217,6 @@ public class Tests implements Constants {
             testPowerupMovement(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
                     new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
 
-//testDotInBounds
-            /// inbounds check
             // collision check
             //powerups work
             //scores work

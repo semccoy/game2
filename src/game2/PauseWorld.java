@@ -8,7 +8,7 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 
 public class PauseWorld extends World implements Constants {
-    
+
     World world;
     Player player;
 
@@ -143,10 +143,13 @@ public class PauseWorld extends World implements Constants {
         fileWriter.close();
         backupHS = highscores;
     }
-    
+
     public static void printOutHighscores() throws IOException {
         for (int i = 0; i < 10; i++) {
             System.out.println("" + highscores.get(i));
+        }
+        if (playOnHuh.score == 0) {
+            System.out.println("Your score was: " + score.score);
         }
     }
 }

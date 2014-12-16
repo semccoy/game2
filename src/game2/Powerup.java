@@ -32,13 +32,6 @@ public class Powerup implements Constants, BoundedObject {
         return this.placePowerup();
     }
 
-    public boolean tooCloseToPlayer(Player player) {
-        return (this.center.x <= player.center.x + 200)
-                && (this.center.x >= player.center.x - 200)
-                && (this.center.y <= player.center.y + 100)
-                && (this.center.y >= player.center.y - 100);
-    }
-
     public Powerup movePowerupAwayFrom(Player player) {
         if (this.center.y > 400) {
             return new Powerup(new Posn(this.center.x + speed * 5 + player.center.x / 200, this.center.y - speed - player.center.y / 200),

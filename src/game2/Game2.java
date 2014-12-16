@@ -23,12 +23,15 @@ public class Game2 extends World implements Constants {
     }
 
     public static void main(String[] args) throws Exception {
-        
+
         Tests.testAllTheThings();
         // reset all scores or print them out or something before player plays
+
         
         
         PauseWorld.accessHighscores();
+        System.out.println("Highscores before start of game:");
+        PauseWorld.printOutHighscores();
         int rand = randomInt(0, 2);
         PlayWorld game = new PlayWorld(new Game2(universe),
                 new Player(playerStart, 40, 40, "normal", playerStartColor),

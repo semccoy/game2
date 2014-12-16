@@ -101,8 +101,9 @@ public class PauseWorld extends World implements Constants {
             }
             try {
                 saveHighscores();
+                PauseWorld.printOutHighscores();
             } catch (IOException ex) {
-                System.out.println("saveHighscores failure" + ex);
+                System.out.println("saveHighscores or printOutHighscores failure" + ex);
             }
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
                     new TextImage(new Posn(WIDTH / 2, HEIGHT / 2 + 150), finalText, 30, Color.white)));
@@ -140,5 +141,11 @@ public class PauseWorld extends World implements Constants {
         }
         fileWriter.close();
         backupHS = highscores;
+    }
+    
+    public static void printOutHighscores() throws IOException {
+        for (int i = 0; i < 10; i++) {
+            System.out.println("" + highscores.get(i));
+        }
     }
 }

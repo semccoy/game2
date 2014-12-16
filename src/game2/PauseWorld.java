@@ -7,7 +7,7 @@ import java.util.*;
 import javalib.funworld.*;
 import javalib.worldimages.*;
 
-public class Pause extends World implements Constants {
+public class PauseWorld extends World implements Constants {
     
     World world;
     Player player;
@@ -16,7 +16,7 @@ public class Pause extends World implements Constants {
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
     static ArrayList<Integer> backupHS = new ArrayList<Integer>();
 
-    public Pause(World world, Player player) {
+    public PauseWorld(World world, Player player) {
         super();
         this.world = world;
         this.player = player;
@@ -77,14 +77,14 @@ public class Pause extends World implements Constants {
         if (key.equals("b")) {
             int rand = randomInt(0, 2);
             invisibleScore.score = 0; // reset invisible score if going to play again (need to get 100 more pts to come back)
-            return new BillGame(new Game2(universe),
+            return new PlayWorld(new Game2(universe),
                     new Player(playerStart, 40, 40, "normal", playerStartColor),
-                    new Bill(bill1Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
-                    new Bill(bill2Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
-                    new Bill(bill3Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
+                    new Dot(dot1Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
+                    new Dot(dot2Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
+                    new Dot(dot3Start, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
                     new Powerup(powerupStart, 20, 0, 0, randomInt(1, 4), powerupTypes[rand], powerupColors[rand]));
         } else {
-            return new Pause(this.world, this.player.movePlayer(key));
+            return new PauseWorld(this.world, this.player.movePlayer(key));
         }
     }
 

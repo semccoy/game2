@@ -6,22 +6,22 @@ import java.io.IOException;
 import javalib.funworld.*;
 import javalib.worldimages.*;
 
-public class BillGame extends World implements Constants {
+public class PlayWorld extends World implements Constants {
 
     Player player;
     World world;
-    public static Bill bill1, bill2, bill3;
+    public static Dot dot1, dot2, dot3;
     Powerup powerup;
 
     WorldImage newTrail = new RectangleImage(new Posn(-100, -100), 40, 40, Color.black);
 
-    public BillGame(World world, Player player, Bill bill1, Bill bill2, Bill bill3, Powerup powerup) {
+    public PlayWorld(World world, Player player, Dot dot1, Dot dot2, Dot dot3, Powerup powerup) {
         super();
         this.player = player;
         this.world = world;
-        this.bill1 = bill1;
-        this.bill2 = bill2;
-        this.bill3 = bill3;
+        this.dot1 = dot1;
+        this.dot2 = dot2;
+        this.dot3 = dot3;
         this.powerup = powerup;
     }
 
@@ -37,9 +37,9 @@ public class BillGame extends World implements Constants {
                                         new OverlayImages(showOptions(),
                                                 new OverlayImages(background,
                                                         new OverlayImages(powerup.powerupImage(),
-                                                                new OverlayImages(bill1.billImage(),
-                                                                        new OverlayImages(bill2.billImage(),
-                                                                                new OverlayImages(bill3.billImage(),
+                                                                new OverlayImages(dot1.dotImage(),
+                                                                        new OverlayImages(dot2.dotImage(),
+                                                                                new OverlayImages(dot3.dotImage(),
                                                                                         new OverlayImages(makeTrail(player),
                                                                                                 this.player.playerImage())))))))))));
     }
@@ -100,17 +100,17 @@ public class BillGame extends World implements Constants {
         if (invisibleScore.score >= 100) {
             if (key.equals("g")) {
                 player.color = playerStartColor;
-                return new Pause(this.world, this.player);
+                return new PauseWorld(this.world, this.player);
             }
         }
-        return new BillGame(this.world, this.player.movePlayer(key), this.bill1, this.bill2, this.bill3, this.powerup);
+        return new PlayWorld(this.world, this.player.movePlayer(key), this.dot1, this.dot2, this.dot3, this.powerup);
     }
 
     public WorldEnd worldEnds() {
         String finalText;
         if (playOnHuh.score.equals(0)) {
-            if (score.score >= Pause.highscores.get(Pause.highscores.size() - 1)) {
-                Pause.insertScore(score);
+            if (score.score >= PauseWorld.highscores.get(PauseWorld.highscores.size() - 1)) {
+                PauseWorld.insertScore(score);
                 finalText = "Great job! Your score of " + score.score + " was added to the highscores!";
             } else if (score.score <= -100) {
                 finalText = "You lose! Your score of " + score.score + " was really bad! :(";
@@ -120,7 +120,7 @@ public class BillGame extends World implements Constants {
                 finalText = "Too bad! Your score of " + score.score + " was too low to be added to the highscores! :(";
             }
             try {
-                Pause.saveHighscores();
+                PauseWorld.saveHighscores();
             } catch (IOException ex) {
                 System.out.println("saveHighscores failure" + ex);
             }
@@ -139,8 +139,8 @@ public class BillGame extends World implements Constants {
         if (whacks.score > 200) {
             playOnHuh.increaseBy(-1);
         }
-        // bill --> player
-        if (bill1.hitPlayer(player) || bill2.hitPlayer(player) || bill3.hitPlayer(player)) {
+        // dot --> player
+        if (dot1.hitPlayer(player) || dot2.hitPlayer(player) || dot3.hitPlayer(player)) {
             whacks.increaseBy(1);
             score.increaseBy(-1);
             invisibleScore.increaseBy(-1);
@@ -153,23 +153,23 @@ public class BillGame extends World implements Constants {
             score.increaseBy(3);
             invisibleScore.increaseBy(3);
         }
-        // bill --> powerup
-        if (bill1.hitPowerup(powerup) || bill2.hitPowerup(powerup) || bill3.hitPowerup(powerup)) {
+        // dot --> powerup
+        if (dot1.hitPowerup(powerup) || dot2.hitPowerup(powerup) || dot3.hitPowerup(powerup)) {
             powerup.type = powerupTypes[rand];
             powerup.color = powerupColors[rand];
         }
-        // bill --> oob
-        if (!bill1.inBounds()) {
-            billSpawns.increaseBy(1);
-            bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+        // dot --> oob
+        if (!dot1.inBounds()) {
+            dotSpawns.increaseBy(1);
+            dot1 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
         }
-        if (!bill2.inBounds()) {
-            billSpawns.increaseBy(1);
-            bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+        if (!dot2.inBounds()) {
+            dotSpawns.increaseBy(1);
+            dot3 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
         }
-        if (!bill3.inBounds()) {
-            billSpawns.increaseBy(1);
-            bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo / 2), Color.yellow);
+        if (!dot3.inBounds()) {
+            dotSpawns.increaseBy(1);
+            dot3 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo / 2), Color.yellow);
         }
         // powerup --> oob
         if (!powerup.inBounds()) {
@@ -188,21 +188,21 @@ public class BillGame extends World implements Constants {
         }
         if (player.type.equals(powerupTypes[0])) {
             if (trail.size() == 5) {
-                if (bill1.hitTrail(trail)) {
+                if (dot1.hitTrail(trail)) {
                     pokes.increaseBy(1);
                     score.increaseBy(3);
                     invisibleScore.increaseBy(3);
-                    bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
-                } else if (bill2.hitTrail(trail)) {
+                    dot1 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                } else if (dot2.hitTrail(trail)) {
                     pokes.increaseBy(1);
                     score.increaseBy(3);
                     invisibleScore.increaseBy(3);
-                    bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
-                } else if (bill3.hitTrail(trail)) {
+                    dot2 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                } else if (dot3.hitTrail(trail)) {
                     pokes.increaseBy(1);
                     score.increaseBy(3);
                     invisibleScore.increaseBy(3);
-                    bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                    dot3 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                 }
             }
         }
@@ -213,10 +213,10 @@ public class BillGame extends World implements Constants {
             invisibleScore.increaseBy(3);
         }
         if (player.type.equals(powerupTypes[2])) {
-            bill1.speed = bill2.speed = bill3.speed = powerup.speed = 1;
+            dot1.speed = dot2.speed = dot3.speed = powerup.speed = 1;
         }
-        return new BillGame(this.world, this.player, this.bill1.moveBillTowards(player),
-                this.bill2.moveBillTowards(player), this.bill3.moveBillTowards(player),
+        return new PlayWorld(this.world, this.player, this.dot1.moveDotTowards(player),
+                this.dot2.moveDotTowards(player), this.dot3.moveDotTowards(player),
                 this.powerup.movePowerupAwayFrom(player));
     }
 }

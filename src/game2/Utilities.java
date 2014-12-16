@@ -22,8 +22,8 @@ public class Utilities implements Constants {
 
     public static WorldImage showStats() {
         Color color = Color.white;
-        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 95 + 80, 25), "bills spawned: ", 15, color),
-                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 25), billSpawns.print(), 15, color),
+        return new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 95 + 79, 25), "dots spawned: ", 15, color),
+                new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 25), dotSpawns.print(), 15, color),
                         new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 100 + 80, 45), "times whacked: ", 15, color),
                                 new OverlayImages(new TextImage(new Posn(WIDTH / 5 + 80, 45), whacks.print(), 15, color),
                                         new OverlayImages(new TextImage(new Posn(WIDTH / 5 - 115 + 80, 65), "worlds fallen off of: ", 15, color),

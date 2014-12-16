@@ -20,23 +20,23 @@ public interface Constants {
 
     // object stuff
     int wiggliness = 2;
-    int speedo = 4; // default max speed of bills
+    int speedo = 4; // default max speed of dots
     int objectRadius = 20;
-    int billStartX = 1320;
+    int dotStartX = 1320;
     int powerupTop = 120;
     int powerupBottom = 680;
-    Posn bill1Start = new Posn(billStartX, 120);
-    Posn bill2Start = new Posn(billStartX, 400);
-    Posn bill3Start = new Posn(billStartX, 680);
+    Posn dot1Start = new Posn(dotStartX, 120);
+    Posn dot2Start = new Posn(dotStartX, 400);
+    Posn dot3Start = new Posn(dotStartX, 680);
     Posn powerupStart = new Posn(1000, 400);
-    String[] powerupTypes = {"trailwhip", "billwiper", "slowtime"};
+    String[] powerupTypes = {"trailwhip", "wiper", "slowtime"};
     Color[] powerupColors = {new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255)};
 
     // stat attributes
     Score score = new Score(0);
     Score invisibleScore = new Score(0);
     Score whacks = new Score(0);
-    Score billSpawns = new Score(3);
+    Score dotSpawns = new Score(3);
     Score falls = new Score(0);
     Score resets = new Score(0);
 

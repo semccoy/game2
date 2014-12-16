@@ -91,9 +91,9 @@ public class Player implements Constants, BoundedObject {
                     wipesLeft.increaseBy(-1);
                     score.increaseBy(5);
                     invisibleScore.increaseBy(5);
-                    BillGame.bill1 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
-                    BillGame.bill2 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
-                    BillGame.bill3 = new Bill(new Posn(billStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                    PlayWorld.dot1 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                    PlayWorld.dot2 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+                    PlayWorld.dot3 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
                 }
             default:
                 return new Player(this.center, this.length, this.width, this.type, this.color);

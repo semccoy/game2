@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import javalib.worldimages.*;
 
-public class Bill implements Constants, BoundedObject {
+public class Dot implements Constants, BoundedObject {
 
     Posn center;
     int radius;
@@ -14,7 +14,7 @@ public class Bill implements Constants, BoundedObject {
     int speed;
     Color color;
 
-    Bill(Posn center, int radius, int dx, int dy, int speed, Color color) {
+    Dot(Posn center, int radius, int dx, int dy, int speed, Color color) {
         this.center = center;
         this.radius = radius;
         this.dx = dx;
@@ -23,17 +23,17 @@ public class Bill implements Constants, BoundedObject {
         this.color = color;
     }
 
-    WorldImage billImage() {
+    WorldImage dotImage() {
         return new DiskImage(this.center, this.radius, this.color);
     }
 
-    public WorldImage placeBill() {
-        return this.billImage();
+    public WorldImage placeDot() {
+        return this.dotImage();
     }
 
-    public Bill moveBillTowards(Player player) {
+    public Dot moveDotTowards(Player player) {
         int my = this.center.y - player.center.y;
-        return new Bill(new Posn(this.center.x - speed * 5, this.center.y - randomInt(wiggliness - 1, wiggliness + 1) * my / step),
+        return new Dot(new Posn(this.center.x - speed * 5, this.center.y - randomInt(wiggliness - 1, wiggliness + 1) * my / step),
                 this.radius, this.dx, this.dy, this.speed, this.color);
     }
 

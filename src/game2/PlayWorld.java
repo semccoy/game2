@@ -165,7 +165,7 @@ public class PlayWorld extends World implements Constants {
         }
         if (!dot2.inBounds()) {
             dotSpawns.increaseBy(1);
-            dot3 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
+            dot2 = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), Color.yellow);
         }
         if (!dot3.inBounds()) {
             dotSpawns.increaseBy(1);

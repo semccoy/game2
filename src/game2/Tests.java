@@ -1,6 +1,7 @@
 package game2;
 
 import static game2.Utilities.*;
+import java.awt.Color;
 import java.util.*;
 import javalib.worldimages.*;
 
@@ -27,7 +28,6 @@ public class Tests implements Constants {
 
     }
 
-//    System.out.println("" + );
     public static void testPlayerMovement(Player player, String direction) throws RuntimeException {
         int oldX = player.center.x;
         int oldY = player.center.y;
@@ -79,18 +79,32 @@ public class Tests implements Constants {
         } else {
             testPlayerMovement(player, direction);
         }
+    }
 
+    public static void testDotMovement(Dot dot, Player player) throws RuntimeException {
+        int oldX = dot.center.x;
+        // dot y-movement is variable and doesn't necessarily happen, so can't test as invariant
+        if (!(dot.moveDotTowards(player).center.x == oldX - dot.speed * 5)) {
+            throw new RuntimeException("dot x movement failed");
+        }
     }
 
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
 
-            Posn centerStart = new Posn(randomInt(120, 1320), randomInt(120, 680));
-            
-            randomDirection();
-            testPlayerMovement(new Player(playerStart, 40, 40, "normal", playerStartColor), randomDirection());
-            testPlayerMovementEdge(new Player(centerStart, 40, 40, "normal", playerStartColor), randomDirection());
+            Posn randomCenter = new Posn(randomInt(120, 1320), randomInt(120, 680));
 
+            randomDirection();
+            
+            
+            
+            testPlayerMovement(new Player(playerStart, 40, 40, "normal", playerStartColor), randomDirection());
+            testPlayerMovementEdge(new Player(randomCenter, 40, 40, "normal", playerStartColor), randomDirection());
+            testDotMovement(new Dot(randomCenter, objectRadius, 0, 0, randomInt(1, 4), Color.yellow),
+                    new Player(randomCenter, 40, 40, "normal", playerStartColor));
+
+            /// inbounds check
+            // collision check
         }
     }
 

@@ -38,8 +38,7 @@ public class Dot implements Constants, BoundedObject {
     }
 
     boolean inBounds() {
-        return !(hitTopBorder()) && !(hitBottomBorder())
-                && !(hitLeftBorder());
+        return !(hitTopBorder()) && !(hitBottomBorder()) && !(hitLeftBorder());
     }
 
     public boolean hitTopBorder() {

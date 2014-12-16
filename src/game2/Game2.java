@@ -25,7 +25,7 @@ public class Game2 extends World implements Constants {
     public static void main(String[] args) throws Exception {
         
         Tests.testAllTheThings();
-        
+        // reset all scores or print them out or something before player plays
         
         
         PauseWorld.accessHighscores();

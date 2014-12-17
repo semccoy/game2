@@ -338,6 +338,19 @@ public class Tests implements Constants {
             }
         }
     }
+    
+    
+    public static void testScoreIncrementing(Score testScore) {
+        int oldScore = testScore.score;
+        int randomInt = randomInt(-1000,1000);
+        testScore.increaseBy(randomInt);
+        if (!(testScore.score == oldScore + randomInt)) {
+            throw new RuntimeException("score incrementing failed");
+        }
+        
+    }
+    
+    
 
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
@@ -346,6 +359,7 @@ public class Tests implements Constants {
             Posn randomCenterAnywhere = new Posn(randomInt(0, 1440), randomInt(0, 800));
             int randomSpeed = randomInt(0, 4);
             int randomSize = randomInt(0, 100);
+            int randomScore = randomInt(-10000,10000);
             String randomType = randomString(100);
 
             randomDirection();
@@ -380,10 +394,9 @@ public class Tests implements Constants {
             testSlowTimePowerup(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, powerupTypes[2], randomColor()),
                     new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()),
                     new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
+            testScoreIncrementing(new Score());
+            testScoreIncrementing(new Score(randomScore));
 
-            // wipe wips
-            // slow slows
-//scores work
             // world switches work
         }
     }

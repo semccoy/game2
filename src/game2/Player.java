@@ -109,7 +109,7 @@ public class Player implements Constants{
     }
 
     public boolean hitBottomBorder() {
-        return this.center.y > 700;
+        return this.center.y > 660;
     }
 
     public boolean hitLeftBorder() {

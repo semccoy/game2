@@ -149,7 +149,7 @@ public class PauseWorld extends World implements Constants {
             System.out.println("" + highscores.get(i));
         }
         if (playOnHuh.score == 0) {
-            System.out.println("Your score was: " + score.score);
+            System.out.println("\nYour score was: " + score.score + "\n");
         }
     }
 }

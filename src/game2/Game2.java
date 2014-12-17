@@ -25,8 +25,30 @@ public class Game2 extends World implements Constants {
     public static void main(String[] args) throws Exception {
 
         Tests.testAllTheThings();
-        // reset all scores or print them out or something before player plays
 
+        // reset all scores or print them out or something before player plays
+        System.out.println("Before you played, the testing suite obtained the following scores:");
+        System.out.println("    Note that all scores were tested; most were reset by the suite.");
+        System.out.println("    The suite ran " + numberOfTests + " times.\n");
+        System.out.println("score: " + score.print());
+        System.out.println("falls: " + falls.print());
+        System.out.println("resets: " + resets.print());
+        System.out.println("\nThese scores have now been reset. Have fun!\n");
+
+        score.score = 0;
+        invisibleScore.score = 0;
+        whacks.score = 0;
+        dotSpawns.score = 3;
+        falls.score = 0;
+        resets.score = 0;
+        powerupSpawns.score = 1;
+        powerupsGotten.score = 0;
+        pokes.score = 0;
+        wipesLeft.score = 0;
+        playOnHuh.score = 1;
+        trail.clear();
+
+        // begin normal gameplay stuff
         PauseWorld.accessHighscores();
         System.out.println("Highscores before start of game:");
         PauseWorld.printOutHighscores();

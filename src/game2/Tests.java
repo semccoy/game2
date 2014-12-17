@@ -1,17 +1,6 @@
 package game2;
 
-import static game2.Constants.dot1Start;
-import static game2.Constants.dot2Start;
-import static game2.Constants.dot3Start;
-import static game2.Constants.objectRadius;
-import static game2.Constants.playerStart;
-import static game2.Constants.playerStartColor;
-import static game2.Constants.powerupColors;
-import static game2.Constants.powerupStart;
-import static game2.Constants.powerupTypes;
-import static game2.Game2.universe;
 import static game2.Utilities.*;
-import java.awt.Color;
 import java.util.*;
 import javalib.funworld.*;
 import javalib.worldimages.*;

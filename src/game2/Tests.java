@@ -259,7 +259,7 @@ public class Tests implements Constants {
                     && (powerup.center.x <= player.center.x + 2 * objectRadius)
                     && (powerup.center.y >= player.center.y - 2 * objectRadius)
                     && (powerup.center.y <= player.center.y + 2 * objectRadius)) {
-                throw new RuntimeException("powerup-trail collision failed case 1");
+                throw new RuntimeException("powerup-player collision failed case 1");
             }
             // but if the two didn't hit, they shouldn't be touching
         } else {
@@ -267,10 +267,20 @@ public class Tests implements Constants {
                     && (powerup.center.x <= player.center.x + 2 * objectRadius)
                     && (powerup.center.y >= player.center.y - 2 * objectRadius)
                     && (powerup.center.y <= player.center.y + 2 * objectRadius)) {
-                throw new RuntimeException("powerup-trail collision failed case 2");
+                throw new RuntimeException("powerup-player collision failed case 2");
             }
         }
     }
+
+    public static void testPowerupChangesPlayerType(Powerup powerup, Player player) {
+        if (powerup.hitPlayer(player)) {
+            if (!powerup.type.equals(player.type)) {
+                throw new RuntimeException("powerup changes player type failed");
+            }
+        }
+    }
+    
+    
 
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
@@ -301,8 +311,9 @@ public class Tests implements Constants {
                     new ArrayList<Posn>());
             testPowerupPlayerCollision(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
                     new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
+            testPowerupChangesPlayerType(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
 
-            //powerups work
             //scores work
             // world switches work
         }

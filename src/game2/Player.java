@@ -24,20 +24,20 @@ public class Player implements Constants{
         return new RectangleImage(this.center, this.length, this.width, this.color);
     }
 
-    public void populatePlayerTrail() {
-        Posn newPos = this.center;
-        if (this.trail.size() < maxTrailSize) {
-            this.trail.add(newPos);
+    public static void populatePlayerTrail(Player player) {
+        Posn newPos = player.center;
+        if (trail.size() < maxTrailSize) {
+            trail.add(newPos);
         } else {
             for (int i = 0; i < maxTrailSize - 1; i++) {
-                this.trail.set(i, this.trail.get(i + 1));
+                trail.set(i, trail.get(i + 1));
             }
-            this.trail.set(maxTrailSize - 1, newPos);
+            trail.set(maxTrailSize - 1, newPos);
         }
     }
 
     public Player movePlayer(String key) {
-        populatePlayerTrail();
+        populatePlayerTrail(this);
         switch (key) {
             case "up":
                 if (hitTopBorder()) {

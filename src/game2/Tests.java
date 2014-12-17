@@ -6,8 +6,6 @@ import javalib.worldimages.*;
 
 public class Tests implements Constants {
 
-    
-
     public static String randomDirection() {
         // c/o Katherine
         Random rand = new Random();
@@ -182,6 +180,78 @@ public class Tests implements Constants {
 
     }
 
+    public static void testTrailLength(Player player, String direction) {
+        player.movePlayer(direction);
+        Player.populatePlayerTrail(player);
+        if (!(trail.size() <= 5)) {
+            throw new RuntimeException("trail length failed");
+        }
+
+    }
+
+    public static void testDotPlayerCollision(Dot dot, Player player) {
+        // if the two hit, they should be close enough to be touching
+        if (dot.hitPlayer(player)) {
+            if (!(dot.center.x >= player.center.x - 2 * objectRadius)
+                    && (dot.center.x <= player.center.x + 2 * objectRadius)
+                    && (dot.center.y >= player.center.y - 2 * objectRadius)
+                    && (dot.center.y <= player.center.y + 2 * objectRadius)) {
+                throw new RuntimeException("dot-player collision failed case 1");
+            }
+            // but if the two didn't hit, they shouldn't be touching
+        } else {
+            if ((dot.center.x >= player.center.x - 2 * objectRadius)
+                    && (dot.center.x <= player.center.x + 2 * objectRadius)
+                    && (dot.center.y >= player.center.y - 2 * objectRadius)
+                    && (dot.center.y <= player.center.y + 2 * objectRadius)) {
+                throw new RuntimeException("dot-player collision failed case 2");
+            }
+        }
+    }
+
+    public static void testDotPowerupCollision(Dot dot, Powerup powerup) {
+        // if the two hit, they should be close enough to be touching
+        if (dot.hitPowerup(powerup)) {
+            if (!(dot.center.x >= powerup.center.x - 2 * objectRadius)
+                    && (dot.center.x <= powerup.center.x + 2 * objectRadius)
+                    && (dot.center.y >= powerup.center.y - 2 * objectRadius)
+                    && (dot.center.y <= powerup.center.y + 2 * objectRadius)) {
+                throw new RuntimeException("dot-powerup collision failed case 1");
+            }
+            // but if the two didn't hit, they shouldn't be touching
+        } else {
+            if ((dot.center.x >= powerup.center.x - 2 * objectRadius)
+                    && (dot.center.x <= powerup.center.x + 2 * objectRadius)
+                    && (dot.center.y >= powerup.center.y - 2 * objectRadius)
+                    && (dot.center.y <= powerup.center.y + 2 * objectRadius)) {
+                throw new RuntimeException("dot-powerup collision failed case 2");
+            }
+        }
+    }
+
+    public static void testDotTrailCollision(Dot dot, ArrayList<Posn> trail) {
+        for (int i = 0; i < 5; i++) {
+            trail.add(new Posn(randomInt(120, 1320), randomInt(120, 680)));
+        }
+        // if the two hit, they should be close enough to be touching
+        if (dot.hitTrail(trail)) {
+            if (!(dot.center.x >= trail.get(0).x - 2 * objectRadius)
+                    && (dot.center.x <= trail.get(0).x + 2 * objectRadius)
+                    && (dot.center.y >= trail.get(0).y - 2 * objectRadius)
+                    && (dot.center.y <= trail.get(0).y + 2 * objectRadius)) {
+                throw new RuntimeException("dot-trail collision failed case 1");
+            }
+            // but if the two didn't hit, they shouldn't be touching
+        } else {
+            if ((dot.center.x >= trail.get(0).x - 2 * objectRadius)
+                    && (dot.center.x <= trail.get(0).x + 2 * objectRadius)
+                    && (dot.center.y >= trail.get(0).y - 2 * objectRadius)
+                    && (dot.center.y <= trail.get(0).y + 2 * objectRadius)) {
+                throw new RuntimeException("dot-trail collision failed case 2");
+            }
+        }
+    }
+
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
 
@@ -193,33 +263,28 @@ public class Tests implements Constants {
 
             randomDirection();
 
-            testPlayerInBounds(new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()));
             testPlayerInBounds(new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
-
-            testDotInBounds(new Dot(randomCenterInBounds, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
             testDotInBounds(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
-
-            testPowerupInBounds(new Powerup(randomCenterInBounds, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()));
             testPowerupInBounds(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()));
-
             testPlayerMovement(new Player(playerStart, randomSize, randomSize, randomType, randomColor()), randomDirection());
-
             testPlayerMovementEdge(new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()), randomDirection());
             testPlayerMovementEdge(new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()), randomDirection());
-
-            testDotMovement(new Dot(randomCenterInBounds, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
-                    new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()));
             testDotMovement(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
                     new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
-
-            testPowerupMovement(new Powerup(randomCenterInBounds, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
-                    new Player(randomCenterInBounds, randomSize, randomSize, randomType, randomColor()));
             testPowerupMovement(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
                     new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
-
-            // collision check
+            testTrailLength(new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()), randomDirection());
+            testDotPlayerCollision(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
+            testDotPowerupCollision(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()));
+            testDotTrailCollision(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new ArrayList<Posn>());
+            
+            
             //powerups work
             //scores work
+            // world switches work
         }
     }
 

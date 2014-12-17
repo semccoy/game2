@@ -252,17 +252,36 @@ public class Tests implements Constants {
         }
     }
 
+    public static void testPowerupPlayerCollision(Powerup powerup, Player player) {
+        // if the two hit, they should be close enough to be touching
+        if (powerup.hitPlayer(player)) {
+            if (!(powerup.center.x >= player.center.x - 2 * objectRadius)
+                    && (powerup.center.x <= player.center.x + 2 * objectRadius)
+                    && (powerup.center.y >= player.center.y - 2 * objectRadius)
+                    && (powerup.center.y <= player.center.y + 2 * objectRadius)) {
+                throw new RuntimeException("powerup-trail collision failed case 1");
+            }
+            // but if the two didn't hit, they shouldn't be touching
+        } else {
+            if ((powerup.center.x >= player.center.x - 2 * objectRadius)
+                    && (powerup.center.x <= player.center.x + 2 * objectRadius)
+                    && (powerup.center.y >= player.center.y - 2 * objectRadius)
+                    && (powerup.center.y <= player.center.y + 2 * objectRadius)) {
+                throw new RuntimeException("powerup-trail collision failed case 2");
+            }
+        }
+    }
+
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
 
             Posn randomCenterInBounds = new Posn(randomInt(120, 1320), randomInt(120, 680));
             Posn randomCenterAnywhere = new Posn(randomInt(0, 1440), randomInt(0, 800));
-            int randomSpeed = randomInt(1, 4);
-            int randomSize = randomInt(1, 100);
+            int randomSpeed = randomInt(0, 4);
+            int randomSize = randomInt(0, 100);
             String randomType = randomString(100);
 
             randomDirection();
-
             testPlayerInBounds(new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
             testDotInBounds(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
             testPowerupInBounds(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()));
@@ -280,8 +299,9 @@ public class Tests implements Constants {
                     new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()));
             testDotTrailCollision(new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
                     new ArrayList<Posn>());
-            
-            
+            testPowerupPlayerCollision(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
+
             //powerups work
             //scores work
             // world switches work

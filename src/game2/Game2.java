@@ -27,8 +27,6 @@ public class Game2 extends World implements Constants {
         Tests.testAllTheThings();
         // reset all scores or print them out or something before player plays
 
-        
-        
         PauseWorld.accessHighscores();
         System.out.println("Highscores before start of game:");
         PauseWorld.printOutHighscores();

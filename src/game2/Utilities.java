@@ -5,7 +5,7 @@ import java.util.Random;
 import javalib.worldimages.*;
 
 public class Utilities implements Constants {
-    
+
     static String stringThings = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-_=+[{]}|;:',<.>/?";
 
     public static int randomInt(int min, int max) {

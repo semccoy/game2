@@ -55,9 +55,9 @@ public class Powerup implements Constants {
     }
 
     boolean hitPlayer(Player player) {
-        return (this.center.x >= player.center.x - objectRadius)
-                && (this.center.x <= player.center.x + objectRadius)
-                && (this.center.y >= player.center.y - objectRadius)
-                && (this.center.y <= player.center.y + objectRadius);
+        return (this.center.x >= player.center.x - 2 * objectRadius)
+                && (this.center.x <= player.center.x + 2 * objectRadius)
+                && (this.center.y >= player.center.y - 2 * objectRadius)
+                && (this.center.y <= player.center.y + 2 * objectRadius);
     }
 }

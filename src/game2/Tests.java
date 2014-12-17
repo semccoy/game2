@@ -1,7 +1,19 @@
 package game2;
 
+import static game2.Constants.dot1Start;
+import static game2.Constants.dot2Start;
+import static game2.Constants.dot3Start;
+import static game2.Constants.objectRadius;
+import static game2.Constants.playerStart;
+import static game2.Constants.playerStartColor;
+import static game2.Constants.powerupColors;
+import static game2.Constants.powerupStart;
+import static game2.Constants.powerupTypes;
+import static game2.Game2.universe;
 import static game2.Utilities.*;
+import java.awt.Color;
 import java.util.*;
+import javalib.funworld.*;
 import javalib.worldimages.*;
 
 public class Tests implements Constants {
@@ -299,7 +311,8 @@ public class Tests implements Constants {
     }
 
     public static void testWiperPowerup(Powerup powerup, Player player, Dot dot) {
-        // code borrowed from onTick() method of PlayWorld class (didn't have its own method)
+        // code borrowed from onTick() method of PlayWorld class and
+        // movePlayer() method of Player class (didn't have its own method)
         if (powerup.hitPlayer(player)) {
             player.type = powerup.type;
             if (player.type.equals(powerupTypes[1])) {
@@ -338,19 +351,35 @@ public class Tests implements Constants {
             }
         }
     }
-    
-    
+
     public static void testScoreIncrementing(Score testScore) {
         int oldScore = testScore.score;
-        int randomInt = randomInt(-1000,1000);
+        int randomInt = randomInt(-1000, 1000);
         testScore.increaseBy(randomInt);
         if (!(testScore.score == oldScore + randomInt)) {
             throw new RuntimeException("score incrementing failed");
         }
-        
     }
-    
-    
+
+    public static void testWorldChange(World testWorld) {
+        playOnHuh.score = 1;
+        invisibleScore.increaseBy(1);
+        if (testWorld.onKeyEvent("g") instanceof PlayWorld) {
+            if (invisibleScore.score > 100) {
+                throw new RuntimeException("world hop from playworld failed");
+            }
+        } else if (testWorld.onKeyEvent("b") instanceof PauseWorld) {
+            if (invisibleScore.score > 100) {
+                if (!(playOnHuh.score == 0)) {
+                    throw new RuntimeException("world hop from playworld failed");
+                }
+            }
+        }
+        testWorld.onKeyEvent("l");
+        if (!(playOnHuh.score == 0)) {
+            throw new RuntimeException("world hop from playworld failed");
+        }
+    }
 
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
@@ -359,7 +388,7 @@ public class Tests implements Constants {
             Posn randomCenterAnywhere = new Posn(randomInt(0, 1440), randomInt(0, 800));
             int randomSpeed = randomInt(0, 4);
             int randomSize = randomInt(0, 100);
-            int randomScore = randomInt(-10000,10000);
+            int randomScore = randomInt(-10000, 10000);
             String randomType = randomString(100);
 
             randomDirection();
@@ -396,9 +425,14 @@ public class Tests implements Constants {
                     new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
             testScoreIncrementing(new Score());
             testScoreIncrementing(new Score(randomScore));
-
-            // world switches work
+            testWorldChange(new PlayWorld(new Game2(universe),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()),
+                    new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor())));
+            testWorldChange(new PauseWorld(new Game2(universe),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor())));
         }
     }
-
 }

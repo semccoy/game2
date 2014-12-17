@@ -17,8 +17,8 @@ public class PlayWorld extends World implements Constants {
 
     public PlayWorld(World world, Player player, Dot dot1, Dot dot2, Dot dot3, Powerup powerup) {
         super();
-        this.player = player;
         this.world = world;
+        this.player = player;
         this.dot1 = dot1;
         this.dot2 = dot2;
         this.dot3 = dot3;

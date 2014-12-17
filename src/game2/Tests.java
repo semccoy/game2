@@ -279,8 +279,65 @@ public class Tests implements Constants {
             }
         }
     }
-    
-    
+
+    public static void testTrailWhipPowerup(Powerup powerup, Player player, Dot dot, ArrayList<Posn> testTrail) {
+        // code borrowed from onTick() method of PlayWorld class (didn't have its own method)
+        for (int i = 0; i < 5; i++) {
+            testTrail.add(new Posn(randomInt(120, 1320), randomInt(120, 680)));
+        }
+        if (powerup.hitPlayer(player)) {
+            player.type = powerup.type;
+            if (player.type.equals(powerupTypes[0])) {
+                if (dot.hitTrail(testTrail)) {
+                    dot = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), randomColor());
+                    if (!(dot.center.x == dotStartX)) {
+                        throw new RuntimeException("trailwhip powerup failed");
+                    }
+                }
+            }
+        }
+    }
+
+    public static void testWiperPowerup(Powerup powerup, Player player, Dot dot) {
+        // code borrowed from onTick() method of PlayWorld class (didn't have its own method)
+        if (powerup.hitPlayer(player)) {
+            player.type = powerup.type;
+            if (player.type.equals(powerupTypes[1])) {
+                player.type = "normal";
+                wipesLeft.increaseBy(1);
+            }
+            player.movePlayer("w");
+            if (!(wipesLeft.score == 0)) {
+                throw new RuntimeException("wiper powerup test case decrementing not working");
+            }
+            if (player.type.equals("normal")) {
+                if (wipesLeft.score == 0) {
+                    player.color = playerStartColor;
+                }
+            }
+            if (!(player.color == playerStartColor)) {
+                throw new RuntimeException("wiper powerup test case player recoloring not working");
+            }
+
+            dot = new Dot(new Posn(dotStartX, randomInt(120, 680)), objectRadius, 0, 0, randomInt(1, speedo), randomColor());
+            if (!(dot.center.x == dotStartX)) {
+                throw new RuntimeException("wiper powerup test case dot resetting not working");
+            }
+        }
+    }
+
+    public static void testSlowTimePowerup(Powerup powerup, Player player, Dot dot) {
+        // code borrowed from onTick() method of PlayWorld class (didn't have its own method)
+        if (powerup.hitPlayer(player)) {
+            player.type = powerup.type;
+            if (player.type.equals(powerupTypes[2])) {
+                dot.speed = powerup.speed = 1;
+            }
+            if (!(powerup.speed == 1) && (!(dot.speed == 1))) {
+                throw new RuntimeException("slowtime powerup failed");
+            }
+        }
+    }
 
     public static void testAllTheThings() {
         for (int i = 0; i < numberOfTests; i++) {
@@ -313,8 +370,20 @@ public class Tests implements Constants {
                     new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
             testPowerupChangesPlayerType(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, randomType, randomColor()),
                     new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()));
+            testTrailWhipPowerup(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, powerupTypes[0], randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()),
+                    new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()),
+                    new ArrayList<Posn>());
+            testWiperPowerup(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, powerupTypes[1], randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()),
+                    new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
+            testSlowTimePowerup(new Powerup(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSize, powerupTypes[2], randomColor()),
+                    new Player(randomCenterAnywhere, randomSize, randomSize, randomType, randomColor()),
+                    new Dot(randomCenterAnywhere, randomSize, randomSize, randomSize, randomSpeed, randomColor()));
 
-            //scores work
+            // wipe wips
+            // slow slows
+//scores work
             // world switches work
         }
     }
